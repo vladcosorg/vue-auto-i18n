@@ -28,11 +28,12 @@
     "vue": "^2.0.0",
     "vue-i18n": "^8.0.0"
   },
-  "main": "dist/src/index.js",
-  "typings": "dist/src/index.d.ts",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
   "version": "0.1.0",
   "scripts": {
-    "build": " rm -rf dist/ && tsc --build tsconfig.json",
+    "build": "rm -rf dist/ && tsc --build tsconfig.prod.esm.json && tsc --build tsconfig.prod.cjs.json",
     "watch": "tsc -w",
     "test": "jest --passWithNoTests --runInBand",
     "test--watch": "npm run test -- --watch --no-cache",

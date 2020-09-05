@@ -27,6 +27,7 @@ export default {
           newLocale,
           sourceMessages,
         )
+        console.log(translatedMessages)
         instance.setLocaleMessage(newLocale, translatedMessages)
       },
       { immediate: true },

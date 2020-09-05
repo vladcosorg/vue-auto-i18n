@@ -1,0 +1,7 @@
+{
+  "extends": "./tsconfig.prod.cjs.json",
+  "compilerOptions": {
+    "outDir": "./dist/esm",
+    "module": "esnext"
+  }
+}

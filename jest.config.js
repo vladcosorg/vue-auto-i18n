@@ -4,6 +4,5 @@ module.exports = {
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
-  setupFiles: ['<rootDir>/test/setup.js'],
   testPathIgnorePatterns: ['<rootDir>/dist/'],
 }

@@ -15,7 +15,7 @@ export class TranslationApi {
     const params = new URLSearchParams({
       q: this.encode(messages),
       target: targetLanguage,
-      format: 'text',
+      format: 'html',
       key: this.apiKey,
     })
 
@@ -50,7 +50,7 @@ export class TranslationApi {
         continue
       }
 
-      output[translationKey] = match[1]
+      output[translationKey] = match[1].trim()
     }
 
     return unflatten(output)
