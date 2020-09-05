@@ -1,0 +1,42 @@
+{
+  "license": "MIT",
+  "name": "vue-auto-i18n",
+  "dependencies": {
+    "axios": "^0.20.0",
+    "flat": "^5.0.2"
+  },
+  "devDependencies": {
+    "@types/flat": "^5.0.1",
+    "@types/lodash": "^4.14.161",
+    "@typescript-eslint/eslint-plugin": "^2.34.0",
+    "@typescript-eslint/parser": "^2.34.0",
+    "eslint": "^7.8.1",
+    "eslint-config-airbnb-typescript": "^7.2.1",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-import-resolver-typescript": "^2.0.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jest": "^24.0.0",
+    "eslint-plugin-prettier": "^3.1.3",
+    "jest": "^26.0.0",
+    "prettier": "^2.0.5",
+    "ts-jest": "^26.0.0",
+    "typescript": "^3.8.3",
+    "vue": "^2.0.0",
+    "vue-i18n": "^8.0.0"
+  },
+  "peerDependencies": {
+    "vue": "^2.0.0",
+    "vue-i18n": "^8.0.0"
+  },
+  "main": "dist/src/index.js",
+  "typings": "dist/src/index.d.ts",
+  "version": "0.1",
+  "scripts": {
+    "build": " rm -rf dist/ && tsc --build tsconfig.json",
+    "watch": "tsc -w",
+    "test": "jest --passWithNoTests --runInBand",
+    "test--watch": "npm run test -- --watch --no-cache",
+    "format": "eslint --cache --ext .js,.jsx,.ts,.tsx,.json --fix ./ >/dev/null 2>&1 || true",
+    "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx  ./"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "name": "vue-i18n-google-translate",
+  "dependencies": {
+    "typescript": "^3.8.3"
+  },
+  "main": "src/index.js",
+  "module": "src/index.js",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.34.0",
+    "@typescript-eslint/parser": "^2.34.0",
+    "eslint": "^7.0.0",
+    "eslint-config-airbnb-typescript": "^7.2.1",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-import-resolver-typescript": "^2.0.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-prettier": "^3.1.3",
+    "jest": "^26.0.0",
+    "jest-chain": "^1.1.5",
+    "jest-extended": "^0.11.5",
+    "memfs": "^3.2.0",
+    "mock-fs": "^4.12.0",
+    "nock": "^13.0.0",
+    "prettier": "^2.0.5",
+    "testcontainers": "^2.8.1",
+    "ts-jest": "^26.0.0",
+    "ts-node": "^8.10.1",
+    "tsconfig-paths": "^3.9.0"
+  },
+  "scripts": {
+    "build": " rm -rf dist/ && tsc --build tsconfig.prod.json",
+    "postbuild": "ef-tspm -c tsconfig.prod.json",
+    "import": "node  dist/src/run.js",
+    "import-repl": "ts-node --project tsconfig.prod.json -r tsconfig-paths/register --files src/run.ts",
+    "tsc-check": "tsc --noEmit",
+    "format": "eslint --cache --ext .js,.jsx,.ts,.tsx,.json --fix ./ >/dev/null 2>&1 || true",
+    "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx  ./",
+    "test": "jest --passWithNoTests --runInBand",
+    "test-quick": "jest --passWithNoTests --runInBand 'unit/|integration/'",
+    "test-simulated": "jest --passWithNoTests --runInBand 'simulated'",
+    "test--coverage": "npm run test -- --coverage",
+    "test--watch": "npm run test -- --watch --no-cache"
+  },
+  "version": "0.0.0"
+}
