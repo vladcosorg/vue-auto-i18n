@@ -30,7 +30,7 @@
   },
   "main": "dist/src/index.js",
   "typings": "dist/src/index.d.ts",
-  "version": "0.1",
+  "version": "0.1.0",
   "scripts": {
     "build": " rm -rf dist/ && tsc --build tsconfig.json",
     "watch": "tsc -w",
