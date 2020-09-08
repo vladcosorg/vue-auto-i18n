@@ -21,13 +21,11 @@ export default {
         if (newLocaleHasMessages) {
           return
         }
-
         const sourceMessages = instance.getLocaleMessage(options.sourceLanguage)
         const translatedMessages = await translator.translate(
           newLocale,
           sourceMessages,
         )
-        console.log(translatedMessages)
         instance.setLocaleMessage(newLocale, translatedMessages)
       },
       { immediate: true },

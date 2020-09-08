@@ -20,7 +20,6 @@ export default {
             }
             const sourceMessages = instance.getLocaleMessage(options.sourceLanguage);
             const translatedMessages = yield translator.translate(newLocale, sourceMessages);
-            console.log(translatedMessages);
             instance.setLocaleMessage(newLocale, translatedMessages);
         }), { immediate: true });
     },

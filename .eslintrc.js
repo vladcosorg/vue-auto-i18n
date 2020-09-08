@@ -1,6 +1,7 @@
 module.exports = {
   root: true,
   parserOptions: {
+    project: './tsconfig.test.json',
     ecmaVersion: 2020,
     sourceType: 'module',
   },
@@ -19,7 +20,7 @@ module.exports = {
     // typescript
     {
       parserOptions: {
-        project: `./tsconfig.json`,
+        project: './tsconfig.test.json',
       },
       settings: {
         'import/parsers': {

@@ -6,7 +6,7 @@ interface Options {
     sourceLanguage: Locale;
 }
 declare const _default: {
-    install(vue: VueConstructor, options: Options): void;
+    install(vue: VueConstructor<import("vue/types/vue").Vue>, options: Options): void;
 };
 export default _default;
 //# sourceMappingURL=index.d.ts.map

@@ -1,11 +1,14 @@
 import { TranslationApi, TranslationAPIResponse } from '@/translation-api'
 import { mocked } from 'ts-jest/utils'
 import axios from 'axios'
+import VueI18n from 'vue-i18n'
+import Vue from 'vue'
+import vueAutoI18n from '../src/index'
 jest.mock('axios')
 const mockedAxios = mocked(axios, true)
 const api = new TranslationApi('231123')
 
-test('that the function passes through the data', async () => {
+test('That the function passes through the data', async () => {
   const dataset = {
     test1: 'bar',
     test2: { inner: 'foo' },

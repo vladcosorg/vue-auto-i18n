@@ -36,7 +36,7 @@
     "build": "rm -rf dist/ && tsc --build tsconfig.prod.esm.json && tsc --build tsconfig.prod.cjs.json",
     "watch": "tsc -w",
     "test": "jest --passWithNoTests --runInBand",
-    "test--watch": "npm run test -- --watch --no-cache",
+    "test--watch": "yarn test --watch --runInBand",
     "format": "eslint --cache --ext .js,.jsx,.ts,.tsx,.json --fix ./ >/dev/null 2>&1 || true",
     "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx  ./"
   }
