@@ -43,7 +43,7 @@ class TranslationApi {
             const params = new URLSearchParams({
                 q: this.encode(messages),
                 target: targetLanguage,
-                format: 'text',
+                format: 'html',
                 key: this.apiKey,
             });
             const flatMessageKeys = Object.keys(flat_1.default(messages));
@@ -66,7 +66,7 @@ class TranslationApi {
             if (!match) {
                 continue;
             }
-            output[translationKey] = match[1];
+            output[translationKey] = match[1].trim();
         }
         return flat_1.unflatten(output);
     }

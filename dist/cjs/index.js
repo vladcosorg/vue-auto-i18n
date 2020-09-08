@@ -12,7 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const translation_api_1 = require("./translation-api");
 exports.default = {
     install(vue, options) {
-        console.log('aaa');
         const instance = options.i18nPluginInstance;
         const translator = new translation_api_1.TranslationApi(options.apiKey);
         instance.vm.$watch('locale', (newLocale) => __awaiter(this, void 0, void 0, function* () {
@@ -23,6 +22,7 @@ exports.default = {
             }
             const sourceMessages = instance.getLocaleMessage(options.sourceLanguage);
             const translatedMessages = yield translator.translate(newLocale, sourceMessages);
+            console.log(translatedMessages);
             instance.setLocaleMessage(newLocale, translatedMessages);
         }), { immediate: true });
     },
