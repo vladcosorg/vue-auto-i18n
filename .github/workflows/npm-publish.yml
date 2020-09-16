@@ -1,4 +1,4 @@
-name: Releases
+name: Build and publish package
 
 on:
   push:
@@ -11,7 +11,8 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: '12.x'
+          node-version: 12
+          registry-url: https://registry.npmjs.org/
       - run: yarn install --frozen-lockfile
       - run: yarn pack --filename=package.tgz
       - uses: Klemensas/action-autotag@stable
@@ -43,7 +44,7 @@ jobs:
           asset_name: package.tgz
           asset_content_type: application/tgz
 
-      - run: npm publish package.tgz
+      - run: yarn publish package.tgz
         name: Publish to npm
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
