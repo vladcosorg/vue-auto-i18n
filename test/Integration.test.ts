@@ -9,14 +9,14 @@ const mockedTranslationAPI = mocked(TranslationApi)
 test('That vue-i18n properly integrates with this plugin', () => {
   return new Promise((done) => {
     Vue.use(VueI18n)
-    const i18n: IVueI18n = new VueI18n({
+    const i18n = (new VueI18n({
       locale: 'en',
       messages: {
         en: {
           test: 'foo',
         },
       },
-    })
+    }) as unknown) as IVueI18n
     Vue.use(vueAutoI18n, {
       i18nPluginInstance: i18n,
       sourceLanguage: 'en',
