@@ -1,5 +1,6 @@
 {
   "license": "MIT",
+  "homepage": "https://github.com/chetzof/vue-auto-i18n",
   "name": "vue-auto-i18n",
   "dependencies": {
     "axios": "^0.20.0",
@@ -31,7 +32,7 @@
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "scripts": {
     "build": "rm -rf dist/ && tsc --build tsconfig.prod.esm.json && tsc --build tsconfig.prod.cjs.json",
     "watch": "tsc -w -p tsconfig.prod.esm.json",
