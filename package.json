@@ -32,7 +32,7 @@
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "scripts": {
     "build": "rm -rf dist/ && tsc --build tsconfig.prod.esm.json && tsc --build tsconfig.prod.cjs.json",
     "watch": "tsc -w -p tsconfig.prod.esm.json",
