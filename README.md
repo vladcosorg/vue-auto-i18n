@@ -23,14 +23,14 @@ $ npm i vue-auto-i8n
 $ yarn add vue-auto-i8n
 ```
 
-
-##How it works?
+## How it works?
 
 1. Create a translation file for your primary language 
 2. Initialize the plugin with the Google Translation Api key
 3. That’s it!
 
-##F.A.Q
+## F.A.Q
+
 **Q**: But but the quality of automated translations solutions sucks!  
 **A**: I thought so but nowadays the translations quality is pretty darn good! 
 
