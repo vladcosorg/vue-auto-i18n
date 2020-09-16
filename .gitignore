@@ -1,4 +1,5 @@
 /var
+/dist
 /.eslintcache
 /node_modules
 .yarn
