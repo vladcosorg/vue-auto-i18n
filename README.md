@@ -1,5 +1,5 @@
 <div align="center">
-	<img width="360" src="media/logo.svg" alt="Got">
+	<img width="360" src="https://raw.githubusercontent.com/chetzof/vue-auto-i18n/master/media/logo.svg" alt="Got">
 	<h1>vue-auto-i18n</h1>
 	<h5>Fully automatic internationalization plugin for vue.js fully integrated with vue-i18n</h5>
 </div>
