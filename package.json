@@ -1,7 +1,15 @@
 {
+  "name": "vue-auto-i18n",
+  "version": "0.4.6",
   "license": "MIT",
   "homepage": "https://github.com/chetzof/vue-auto-i18n",
-  "name": "vue-auto-i18n",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/chetzof/vue-auto-i18n.git"
+  },
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "axios": "^0.20.0",
     "flat": "^5.0.2"
@@ -32,7 +40,6 @@
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
-  "version": "0.4.5",
   "scripts": {
     "build": "rm -rf dist/ && tsc --build tsconfig.prod.esm.json && tsc --build tsconfig.prod.cjs.json",
     "watch": "tsc -w -p tsconfig.prod.esm.json",
