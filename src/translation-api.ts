@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { Locale, LocaleMessageObject } from 'vue-i18n'
 import flatten, { unflatten } from 'flat'
 
@@ -20,12 +19,16 @@ export class TranslationApi {
     })
 
     const flatMessageKeys = Object.keys(flatten(messages))
-    const response = await axios.post<TranslationAPIResponse>(
+    const request = new Request(
       'https://translation.googleapis.com/language/translate/v2',
-      params,
+      { method: 'POST', body: params },
     )
+    const response = await fetch(request)
+    const data = await response.json()
+    // console.log(data)
+
     return this.decode(
-      response.data.data.translations[0].translatedText,
+      data.data.translations[0].translatedText,
       flatMessageKeys,
     )
   }

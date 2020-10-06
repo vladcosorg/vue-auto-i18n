@@ -7,7 +7,6 @@ interface Options {
   apiKey: string
   sourceLanguage: Locale
 }
-
 export default {
   install(vue: VueConstructor, options: Options): void {
     const instance = options.i18nPluginInstance
@@ -22,6 +21,7 @@ export default {
           return
         }
         const sourceMessages = instance.getLocaleMessage(options.sourceLanguage)
+        // console.log(sourceMessages)
         const translatedMessages = await translator.translate(
           newLocale,
           sourceMessages,

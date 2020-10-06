@@ -3,6 +3,7 @@ import { mocked } from 'ts-jest/utils'
 import VueI18n, { IVueI18n, Locale, LocaleMessageObject } from 'vue-i18n'
 import Vue from 'vue'
 import vueAutoI18n from '../src/index'
+
 jest.mock('@/translation-api')
 const mockedTranslationAPI = mocked(TranslationApi)
 

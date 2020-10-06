@@ -1,38 +1,35 @@
-import { TranslationApi, TranslationAPIResponse } from '@/translation-api'
-import { mocked } from 'ts-jest/utils'
-import axios from 'axios'
-jest.mock('axios')
-const mockedAxios = mocked(axios, true)
-const api = new TranslationApi('231123')
+import { enableFetchMocks } from 'jest-fetch-mock'
+enableFetchMocks()
+import fetch from 'jest-fetch-mock'
+import { TranslationApi } from '@/translation-api'
 
+const api = new TranslationApi('231123')
+beforeEach(() => {
+  fetch.resetMocks()
+  fetch.doMock()
+})
 test('That the function passes through the data', async () => {
   const dataset = {
     test1: 'bar',
     test2: { inner: 'foo' },
   }
+  fetch.mockResponseOnce(async (request: Request) => {
+    return JSON.stringify({
+      data: {
+        translations: [
+          {
+            translatedText: new URLSearchParams(await request.text()).get('q'),
+          },
+        ],
+      },
+    })
+  })
 
-  mockedAxios.post.mockImplementation(
-    async (
-      url,
-      data: URLSearchParams,
-    ): Promise<{ data: TranslationAPIResponse }> => {
-      return {
-        data: {
-          data: { translations: [{ translatedText: data.get('q') as string }] },
-        },
-      }
-    },
-  )
   const result = await api.translate('lang', dataset)
   expect(result).toEqual(dataset)
 })
 
 test('That it encodes the flat translation map into pseudo-XML', async () => {
-  // const encodedString =
-  // mockedAxios.post.mockResolvedValue({
-  //   data: { data: { translations: [{ translatedText: encodedString }] } },
-  // })
-  // const result = await api.translate('dawd')
   const encodingResults = api['encode']({
     test1: 'bar',
     test2: { inner: 'foo' },

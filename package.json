@@ -4,14 +4,13 @@
   "license": "MIT",
   "homepage": "https://github.com/chetzof/vue-auto-i18n",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/chetzof/vue-auto-i18n.git"
+    "type": "git",
+    "url": "https://github.com/chetzof/vue-auto-i18n.git"
   },
   "files": [
     "dist"
   ],
   "dependencies": {
-    "axios": "^0.20.0",
     "flat": "^5.0.2"
   },
   "devDependencies": {
@@ -27,6 +26,7 @@
     "eslint-plugin-jest": "^24.0.0",
     "eslint-plugin-prettier": "^3.1.3",
     "jest": "^26.0.0",
+    "jest-fetch-mock": "^3.0.3",
     "prettier": "^2.0.5",
     "ts-jest": "^26.0.0",
     "typescript": "3.8.3",
