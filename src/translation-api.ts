@@ -24,6 +24,7 @@ export class TranslationApi {
       { method: 'POST', body: params },
     )
     const response = await fetch(request)
+    console.log(response)
     const data = await response.json()
     // console.log(data)
 
