@@ -18,16 +18,12 @@ export function extend(options: Options) {
   instance.vm.$watch(
     'locale',
     async (newLocale: string) => {
-      // console.log(newLocale)
       const newLocaleMessages = instance.getLocaleMessage(newLocale)
-      // console.log(newLocaleMessages)
       const newLocaleHasMessages = Object.keys(newLocaleMessages).length
-      // console.log(newLocaleHasMessages)
       if (newLocaleHasMessages) {
         return
       }
       const sourceMessages = instance.getLocaleMessage(options.sourceLanguage)
-      // console.log(sourceMessages)
       const translatedMessages = await translator.translate(
         newLocale,
         sourceMessages,
