@@ -6,6 +6,7 @@ interface Options {
   i18nPluginInstance: IVueI18n
   apiKey: string
   sourceLanguage: Locale
+  apiProxyURL?: string
 }
 
 export default {
@@ -14,7 +15,7 @@ export default {
 
 export function extend(options: Options) {
   const instance = options.i18nPluginInstance
-  const translator = new TranslationApi(options.apiKey)
+  const translator = new TranslationApi(options.apiKey, options.apiProxyURL)
   instance.vm.$watch(
     'locale',
     async (newLocale: string) => {

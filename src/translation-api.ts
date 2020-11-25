@@ -7,7 +7,10 @@ export type TranslationAPIResponse = {
 }
 
 export class TranslationApi {
-  constructor(private readonly apiKey: string) {}
+  constructor(
+    private readonly apiKey: string,
+    private readonly apiProxyURL?: string,
+  ) {}
   async translate(
     targetLanguage: Locale,
     messages: LocaleMessageObject,
@@ -20,7 +23,8 @@ export class TranslationApi {
     })
     const flatMessageKeys = Object.keys(flatten(messages))
     const response = await axios.post<TranslationAPIResponse>(
-      'https://translation.googleapis.com/language/translate/v2',
+      this.apiProxyURL ??
+        'https://translation.googleapis.com/language/translate/v2',
       params,
     )
     return this.decode(
