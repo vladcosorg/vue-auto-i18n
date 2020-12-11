@@ -155,7 +155,7 @@ test('Ensure that the message functions are not sent for translation', () => {
       vueI18nOptions: {
         messages: {
           en: {
-            test: (ctx) => 'it should be excluded',
+            test: (): string => 'it should be excluded',
           },
         },
       },

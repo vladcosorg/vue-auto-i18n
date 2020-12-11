@@ -10,4 +10,5 @@ test('Live', async () => {
     // allowed:
     //   'is <b class=notranslate>@.lower:restriction.travel.value.allowed</b> without any restrictions. ',
   })
+  expect(result).not.toBeFalsy()
 })
