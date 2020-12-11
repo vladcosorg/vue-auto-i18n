@@ -1,7 +1,8 @@
 {
   "include": [
     "./src/**/*",
-    "./test/**/*"
+    "./test/**/*",
+    "./types/**/*"
   ],
   "compilerOptions": {
     /* Basic Options */
@@ -21,8 +22,10 @@
     "checkJs": false,
     /* Report errors in .js files. */
     // "jsx": "preserve",                     /* Specify JSX code generation: 'preserve', 'react-native', or 'react'. */
-     "declaration": true,                   /* Generates corresponding '.d.ts' file. */
-     "declarationMap": true,                /* Generates a sourcemap for each corresponding '.d.ts' file. */
+    "declaration": true,
+    /* Generates corresponding '.d.ts' file. */
+    "declarationMap": true,
+    /* Generates a sourcemap for each corresponding '.d.ts' file. */
     // "sourceMap": true,                     /* Generates corresponding '.map' file. */
     // "outFile": "./",                       /* Concatenate and emit output to single file. */
     "outDir": "./dist/esm",
