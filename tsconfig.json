@@ -2,7 +2,8 @@
   "include": [
     "./src/**/*",
     "./test/**/*",
-    "./types/**/*"
+    "./types/**/*",
+"./*"
   ],
   "compilerOptions": {
     /* Basic Options */
@@ -19,7 +20,7 @@
     /* Specify library files to be included in the compilation. */
     "allowJs": true,
     /* Allow javascript files to be compiled. */
-    "checkJs": false,
+    "checkJs": true,
     /* Report errors in .js files. */
     // "jsx": "preserve",                     /* Specify JSX code generation: 'preserve', 'react-native', or 'react'. */
     "declaration": true,
