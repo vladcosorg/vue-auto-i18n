@@ -10,7 +10,7 @@ module.exports = {
   },
   settings: {
     'import/parsers': {
-      '@typescript-eslint/parser': ['.ts', '.tsx'],
+      '@typescript-eslint/parser': ['.ts'],
     },
     'import/resolver': {
       typescript: {}, // this loads <rootdir>/tsconfig.json to eslint
