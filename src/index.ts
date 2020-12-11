@@ -1,15 +1,44 @@
-import { TranslationApi } from './translation-api'
-import { IVueI18n, Locale } from 'vue-i18n'
-import get from 'lodash/get'
-import set from 'lodash/set'
+import isPlainObject from 'lodash/isPlainObject'
+import merge from 'lodash/merge'
+import reduce from 'lodash/reduce'
+import { IVueI18n, Locale, LocaleMessageObject } from 'vue-i18n'
 
-interface Options {
+import { TranslationApi } from './translation-api'
+
+export interface Options {
   i18nPluginInstance: IVueI18n
   apiKey: string
   sourceLanguage: Locale
   apiProxyURL?: string
   automatic?: boolean
   blacklistedPaths?: string[]
+}
+
+function excludeKeys(
+  input: LocaleMessageObject,
+  blacklistedPaths: string[],
+  path?: string,
+): LocaleMessageObject {
+  return reduce(
+    input,
+    (result, value, key) => {
+      const currentPath = path ? `${path}.${key}` : key
+      if (isPlainObject(value)) {
+        result[key] = excludeKeys(
+          value as LocaleMessageObject,
+          blacklistedPaths,
+          path ? `${path}.${key}` : key,
+        )
+      } else {
+        if (!blacklistedPaths.includes(currentPath)) {
+          result[key] = value
+        }
+      }
+
+      return result
+    },
+    {} as LocaleMessageObject,
+  )
 }
 
 export function extendWithAutoI18n(
@@ -25,17 +54,21 @@ export function extendWithAutoI18n(
     if (newLocaleHasMessages) {
       return
     }
-    const sourceMessages = instance.getLocaleMessage(options.sourceLanguage)
-    const translatedMessages = await translator.translate(
-      newLocale,
-      sourceMessages,
+
+    const sourceMessages = instance.messages[options.sourceLanguage]
+    let messagesForTranslation = sourceMessages
+
+    messagesForTranslation = excludeKeys(
+      messagesForTranslation,
+      options.blacklistedPaths ?? [],
     )
 
-    if (options.blacklistedPaths) {
-      for (const path of options.blacklistedPaths) {
-        set(translatedMessages, path, get(sourceMessages, path))
-      }
-    }
+    let translatedMessages = await translator.translate(
+      newLocale,
+      messagesForTranslation,
+    )
+
+    translatedMessages = merge(sourceMessages, translatedMessages)
 
     instance.setLocaleMessage(newLocale, translatedMessages)
   }

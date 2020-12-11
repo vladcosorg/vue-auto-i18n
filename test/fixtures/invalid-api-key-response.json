@@ -1,0 +1,54 @@
+[
+  {
+    "scope": "https://translation.googleapis.com:443",
+    "method": "POST",
+    "path": "/language/translate/v2",
+    "body": "q=%3Cfoo%3Ebar%3C%2Ffoo%3E&target=ru&format=html&key=invalid-api-key",
+    "status": 400,
+    "response": {
+      "error": {
+        "code": 400,
+        "message": "API key not valid. Please pass a valid API key.",
+        "errors": [
+          {
+            "message": "API key not valid. Please pass a valid API key.",
+            "domain": "global",
+            "reason": "badRequest"
+          }
+        ],
+        "status": "INVALID_ARGUMENT"
+      }
+    },
+    "rawHeaders": [
+      "Vary",
+      "X-Origin",
+      "Vary",
+      "Referer",
+      "Content-Type",
+      "application/json; charset=UTF-8",
+      "Date",
+      "Thu, 10 Dec 2020 17:11:41 GMT",
+      "Server",
+      "ESF",
+      "Cache-Control",
+      "private",
+      "X-XSS-Protection",
+      "0",
+      "X-Frame-Options",
+      "SAMEORIGIN",
+      "X-Content-Type-Options",
+      "nosniff",
+      "Alt-Svc",
+      "h3-29=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"",
+      "Accept-Ranges",
+      "none",
+      "Vary",
+      "Origin,Accept-Encoding",
+      "Connection",
+      "close",
+      "Transfer-Encoding",
+      "chunked"
+    ],
+    "responseIsBinary": false
+  }
+]

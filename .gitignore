@@ -109,3 +109,5 @@ typings/
 
 # TernJS port file
 .tern-port
+
+.env

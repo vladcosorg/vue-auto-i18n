@@ -1,8 +1,8 @@
 import axios from 'axios'
-import { Locale, LocaleMessageObject } from 'vue-i18n'
 import flatten, { unflatten } from 'flat'
+import { Locale, LocaleMessageObject } from 'vue-i18n'
 
-export type TranslationAPIResponse = {
+type TranslationAPIResponse = {
   data: { translations: { translatedText: string }[] }
 }
 
@@ -22,15 +22,30 @@ export class TranslationApi {
       key: this.apiKey,
     })
     const flatMessageKeys = Object.keys(flatten(messages))
-    const response = await axios.post<TranslationAPIResponse>(
-      this.apiProxyURL ??
-        'https://translation.googleapis.com/language/translate/v2',
-      params,
-    )
-    return this.decode(
-      response.data.data.translations[0].translatedText,
-      flatMessageKeys,
-    )
+
+    let response
+    try {
+      response = await axios.post<TranslationAPIResponse>(
+        this.apiProxyURL ??
+          'https://translation.googleapis.com/language/translate/v2',
+        params,
+      )
+    } catch (error) {
+      if (error.response) {
+        throw new Error(
+          `${error.response.data.error.message} [${error.response.data.error.code} ${error.response.data.error.status}]`,
+        )
+      }
+
+      throw error
+    }
+
+    const translatedText = response?.data?.data?.translations[0]?.translatedText
+    if (!translatedText) {
+      throw new Error('Unexpected response structure')
+    }
+
+    return this.decode(translatedText, flatMessageKeys)
   }
 
   private encode(input: LocaleMessageObject): string {
