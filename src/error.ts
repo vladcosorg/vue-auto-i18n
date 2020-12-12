@@ -1,5 +1,6 @@
 type GenericObject = Record<string, unknown>
 type Context = GenericObject | string | number | null | undefined
+
 export class InformativeError extends Error {
   constructor(message?: string, protected context?: Context) {
     super(message)
