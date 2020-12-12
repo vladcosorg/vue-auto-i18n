@@ -5,6 +5,5 @@ module.exports = {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
   testPathIgnorePatterns: ['<rootDir>/dist/'],
-  notify: true,
   setupFiles: ['./test/setup.ts'],
 }

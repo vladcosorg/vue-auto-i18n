@@ -56,8 +56,8 @@
     "watch": "npm-run-all --parallel watch-esm watch-cjs",
     "watch-esm": "tsc -w -p tsconfig.prod.esm.json",
     "watch-cjs": "tsc -w -p tsconfig.prod.cjs.json",
-    "test": "jest --passWithNoTests ./unit ./integration",
-    "test--watch": "yarn test --watch --runInBand ./unit ./integration",
+    "test": "jest --passWithNoTests",
+    "test--watch": "yarn test --watch",
     "format": "eslint --cache --ext .js,.jsx,.ts,.tsx,.json --fix ./ >/dev/null 2>&1 || true",
     "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx  ./"
   }

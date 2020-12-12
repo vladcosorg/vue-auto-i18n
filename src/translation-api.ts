@@ -2,6 +2,8 @@ import axios from 'axios'
 import flatten, { unflatten } from 'flat'
 import { Locale, LocaleMessageObject } from 'vue-i18n'
 
+import { InformativeError } from '@/error'
+
 type TranslationAPIResponse = {
   data: { translations: { translatedText: string }[] }
 }
@@ -42,7 +44,9 @@ export class TranslationApi {
 
     const translatedText = response?.data?.data?.translations[0]?.translatedText
     if (!translatedText) {
-      throw new Error('Unexpected response structure')
+      throw new InformativeError('Unexpected response structure', {
+        response,
+      })
     }
 
     return this.decode(translatedText, flatMessageKeys)
