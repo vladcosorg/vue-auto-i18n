@@ -2,7 +2,7 @@ import axios from 'axios'
 import flatten, { unflatten } from 'flat'
 import { Locale, LocaleMessageObject } from 'vue-i18n'
 
-import { InformativeError } from '@/error'
+import { InformativeError } from './error'
 
 type TranslationAPIResponse = {
   data: { translations: { translatedText: string }[] }
