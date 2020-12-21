@@ -3,6 +3,7 @@ import nock from 'nock'
 import { InformativeError } from '@/error'
 import { TranslationApi } from '@/translation-api'
 
+nock.disableNetConnect()
 const api = new TranslationApi('invalid-api-key')
 
 describe('Format conversion', () => {

@@ -40,10 +40,10 @@ module.exports = {
 
     'import/no-unresolved': 'warn',
     'import/extensions': ['warn', 'always', { js: 'never', ts: 'never' }],
-    'import/order': [
-      'warn',
-      { 'newlines-between': 'always', alphabetize: { order: 'asc' } },
-    ],
+    // 'import/order': [
+    //   'warn',
+    //   { 'newlines-between': 'always', alphabetize: { order: 'asc' } },
+    // ],
     'import/no-unused-modules': [
       'warn',
       {

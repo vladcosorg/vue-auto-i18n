@@ -1,5 +1,5 @@
-import axios from 'axios'
 import flatten, { unflatten } from 'flat'
+import fetch from 'node-fetch'
 import { Locale, LocaleMessageObject } from 'vue-i18n'
 
 import { InformativeError } from './error'
@@ -24,25 +24,27 @@ export class TranslationApi {
       key: this.apiKey,
     })
     const flatMessageKeys = Object.keys(flatten(messages))
+    const response = await fetch(
+      this.apiProxyURL ??
+        'https://translation.googleapis.com/language/translate/v2',
+      { method: 'POST', body: params as never },
+    )
+    const jsonReponse = await response.json()
 
-    let response
-    try {
-      response = await axios.post<TranslationAPIResponse>(
-        this.apiProxyURL ??
-          'https://translation.googleapis.com/language/translate/v2',
-        params,
-      )
-    } catch (error) {
-      if (error.response) {
+    if (!response.ok) {
+      if (jsonReponse.error) {
         throw new Error(
-          `${error.response.data.error.message} [${error.response.data.error.code} ${error.response.data.error.status}]`,
+          `${jsonReponse.error.message} [${jsonReponse.error.code} ${jsonReponse.error.status}]`,
         )
       }
 
-      throw error
+      throw new InformativeError('The API return an error response', {
+        data: jsonReponse,
+      })
     }
 
-    const translatedText = response?.data?.data?.translations[0]?.translatedText
+    const translatedText = (jsonReponse as TranslationAPIResponse)?.data
+      ?.translations[0]?.translatedText
     if (!translatedText) {
       throw new InformativeError('Unexpected response structure', {
         response,
