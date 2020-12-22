@@ -13,11 +13,9 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - uses: actions/cache@v2
+      - uses: bahmutov/npm-install@v1
         with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-      - run: yarn install --frozen-lockfile
+          install-command: yarn --frozen-lockfile
       - run: yarn test
       - run: yarn build
         env:
