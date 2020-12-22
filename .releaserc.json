@@ -7,10 +7,10 @@
     "@semantic-release/release-notes-generator",
     ["@semantic-release/npm", {
       "pkgRoot": "dist",
-      "tarballDir": "dist"
+      "tarballDir": "disttar"
     }],
    [ "@semantic-release/github", {
-     "assets": "dist/*.tgz"
+     "assets": "disttar/*.tgz"
    }]
   ]
 }
