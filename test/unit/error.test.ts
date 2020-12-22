@@ -17,12 +17,34 @@ test('Contextual circular object is properly formatted', () => {
 })
 
 test('Deep object is truncated', () => {
-  const testObject: CircularObject = { deep: { object: { is: 'truncated' } } }
+  const testObject: CircularObject = {
+    deep: {
+      object: {
+        is: { is: { is: { is: { is: { is: { is: { is: 'truncated' } } } } } } },
+      },
+    },
+  }
   const error = new InformativeError('Test message', { testObject })
   expect(error.toString()).toEqual(`Error: Test message with context
  {
   "testObject": {
-    "deep": "#TRUNCATED#"
+    "deep": {
+      "object": {
+        "is": {
+          "is": {
+            "is": {
+              "is": {
+                "is": {
+                  "is": {
+                    "is": "#TRUNCATED#"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }`)
 })

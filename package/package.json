@@ -1,5 +1,5 @@
 {
-  "version": "1.0.1",
+  "version": "1.0.0",
   "name": "vue-auto-i18n",
   "license": "MIT",
   "homepage": "https://github.com/chetzof/vue-auto-i18n",
@@ -7,6 +7,9 @@
     "type": "git",
     "url": "https://github.com/chetzof/vue-auto-i18n.git"
   },
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "flat": "^5.0.2",
     "lodash": "^4.17.20",
