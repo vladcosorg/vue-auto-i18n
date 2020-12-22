@@ -6,11 +6,11 @@
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",
     ["@semantic-release/npm", {
-      "pkgRoot": ".",
-      "tarballDir": "disttar"
+      "pkgRoot": "dist",
+      "tarballDir": "dist"
     }],
    [ "@semantic-release/github", {
-     "assets": "disttar/*.tgz"
+     "assets": "dist/*.tgz"
    }]
   ]
 }
