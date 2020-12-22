@@ -68,8 +68,7 @@
     "format": "eslint --cache --ext .js,.jsx,.ts,.tsx,.json --fix ./ >/dev/null 2>&1 || true",
     "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx  ./",
     "generate-supported-languages": "ts-node src/bin/generate-supported-languages.ts",
-    "commit": "cz",
-
+    "commit": "cz"
   },
   "config": {
     "commitizen": {
