@@ -68,7 +68,7 @@
     "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx  ./",
     "generate-supported-languages": "ts-node src/bin/generate-supported-languages.ts",
     "commit": "cz",
-    "semantic-release": "semantic-release"
+    "postpublish": "cp -r package.json dist/package.json && cp -r yarn.lock dist/yarn.lock"
   },
   "config": {
     "commitizen": {
