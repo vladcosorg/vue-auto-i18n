@@ -59,7 +59,7 @@
   "types": "dist/esm/index.d.ts",
   "scripts": {
     "build": "rm -rf dist/ && tsc --build tsconfig.prod.esm.json && tsc --build tsconfig.prod.cjs.json && yarn generate-supported-languages",
-    "postbuild": "cp -r package.json dist/package.json && cp -r yarn.lock dist/yarn.lock",
+    "postbuild": "cp package.json dist/package.json && cp  yarn.lock dist/yarn.lock && cp README.md dist/README.md",
     "watch": "npm-run-all --parallel watch-esm watch-cjs",
     "watch-esm": "tsc -w -p tsconfig.prod.esm.json",
     "watch-cjs": "tsc -w -p tsconfig.prod.cjs.json",
