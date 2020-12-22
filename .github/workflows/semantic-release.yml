@@ -19,7 +19,8 @@ jobs:
       - run: yarn build
         env:
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
-      - run: yarn run semantic-release
+      - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{secrets.NPM_TOKEN}}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: yarn run semantic-release
