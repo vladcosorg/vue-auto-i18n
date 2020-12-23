@@ -3,7 +3,6 @@ import nock from 'nock'
 import { InformativeError } from '@/error'
 import { TranslationApi } from '@/translation-api'
 
-nock.disableNetConnect()
 const api = new TranslationApi('invalid-api-key')
 
 describe('Format conversion', () => {
@@ -14,9 +13,7 @@ describe('Format conversion', () => {
       .post(/.*/)
       .reply(200, (uri, request) => {
         const encodedString = new URLSearchParams(request).get('q')
-        expect(encodedString).toEqual(
-          '<test1>bar</test1><test2.inner>foo</test2.inner>',
-        )
+        expect(encodedString).toEqual('<0>bar</0><1>foo</1>')
         return {
           data: { translations: [{ translatedText: encodedString }] },
         }
@@ -37,8 +34,7 @@ describe('Format conversion', () => {
         data: {
           translations: [
             {
-              translatedText:
-                '<test1>translated</test1><test2.inner>translated</test2.inner>',
+              translatedText: '<0>translated</0><1>translated</1>',
             },
           ],
         },

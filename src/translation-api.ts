@@ -8,6 +8,8 @@ type TranslationAPIResponse = {
   data: { translations: { translatedText: string }[] }
 }
 
+type TranslationMap = Map<string, string>
+
 export class TranslationApi {
   constructor(
     private readonly apiKey: string,
@@ -17,13 +19,15 @@ export class TranslationApi {
     targetLanguage: Locale,
     messages: LocaleMessageObject,
   ): Promise<LocaleMessageObject> {
+    const translationMap: TranslationMap = new Map(
+      Object.entries(flatten(messages)),
+    )
     const params = new URLSearchParams({
-      q: this.encode(messages),
+      q: this.encode(translationMap),
       target: targetLanguage,
       format: 'html',
       key: this.apiKey,
     })
-    const flatMessageKeys = Object.keys(flatten(messages))
     const response = await fetch(
       this.apiProxyURL ??
         'https://translation.googleapis.com/language/translate/v2',
@@ -51,24 +55,28 @@ export class TranslationApi {
       })
     }
 
-    return this.decode(translatedText, flatMessageKeys)
+    return this.decode(translatedText, translationMap)
   }
 
-  private encode(input: LocaleMessageObject): string {
+  private encode(input: TranslationMap): string {
     let outputXml = ''
-    for (const [translationKey, translationValue] of Object.entries(
-      flatten(input),
-    )) {
-      outputXml += `<${translationKey}>${translationValue}</${translationKey}>`
+    let index = 0
+    for (const translationValue of input.values()) {
+      outputXml += `<${index}>${translationValue}</${index}>`
+      index++
     }
 
     return outputXml
   }
 
-  private decode(input: string, keys: string[]): LocaleMessageObject {
+  private decode(
+    input: string,
+    translationMap: TranslationMap,
+  ): LocaleMessageObject {
     const output: Record<string, string> = {}
-    for (const translationKey of keys) {
-      const regex = new RegExp(`<${translationKey}>(.*?)</${translationKey}>`)
+    const index = 0
+    for (const translationKey of translationMap.keys()) {
+      const regex = new RegExp(`<${index}>(.*?)</${index}>`)
       const match = input.match(regex)
       if (!match) {
         continue
@@ -76,7 +84,6 @@ export class TranslationApi {
 
       output[translationKey] = match[1].trim()
     }
-
     return unflatten(output)
   }
 }
