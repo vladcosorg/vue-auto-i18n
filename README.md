@@ -18,7 +18,7 @@
 $ npm i vue-auto-i8n
 ```
 
-###### NPM
+###### Yarn
 ```
 $ yarn add vue-auto-i8n
 ```
