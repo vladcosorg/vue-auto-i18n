@@ -51,9 +51,9 @@
     "vue": "^2.0.0",
     "vue-i18n": "^8.0.0"
   },
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/esm/index.js",
-  "types": "dist/esm/index.d.ts",
+  "main": "cjs/index.js",
+  "module": "esm/index.js",
+  "types": "esm/index.d.ts",
   "scripts": {
     "build": "rm -rf dist/ && tsc --build tsconfig.prod.esm.json && tsc --build tsconfig.prod.cjs.json && yarn generate-supported-languages",
     "postbuild": "cp package.json dist/package.json && cp yarn.lock dist/yarn.lock && cp README.md dist/README.md",
