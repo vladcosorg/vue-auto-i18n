@@ -34,7 +34,8 @@ describe('Format conversion', () => {
         data: {
           translations: [
             {
-              translatedText: '<t0>translated</t0><t1>translated</t1>',
+              translatedText:
+                '<t0>translated-first</t0><t1>translated-second</t1>',
             },
           ],
         },
@@ -42,12 +43,12 @@ describe('Format conversion', () => {
 
     await expect(
       api.translate('ru', {
-        test1: 'not translated',
-        test2: { inner: 'not translated' },
+        test1: 'not translated-first',
+        test2: { inner: 'not translated-second' },
       }),
     ).resolves.toEqual({
-      test1: 'translated',
-      test2: { inner: 'translated' },
+      test1: 'translated-first',
+      test2: { inner: 'translated-second' },
     })
   })
 })
