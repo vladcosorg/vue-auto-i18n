@@ -70,18 +70,27 @@ export class TranslationApi {
     return outputXml
   }
 
-  private escapePlaceholders(unescapedMessage: string): string {
-    if (!unescapedMessage.includes('{')) {
-      return unescapedMessage
+  private escapePlaceholders<T extends string | number>(
+    unescapedMessage: T,
+  ): T {
+    if (typeof unescapedMessage == 'string' && unescapedMessage.includes('{')) {
+      return unescapedMessage.replace(
+        /({.*?})/g,
+        '<b class=notranslate>$1</b>',
+      ) as T
     }
-    return unescapedMessage.replace(/({.*?})/g, '<b class=notranslate>$1</b>')
+
+    return unescapedMessage
   }
 
-  private unescapePlaceholder(escapedMessage: string): string {
-    if (!escapedMessage.includes('{')) {
-      return escapedMessage
+  private unescapePlaceholder<T extends string | number>(escapedMessage: T): T {
+    if (typeof escapedMessage == 'string' && escapedMessage.includes('{')) {
+      return escapedMessage.replace(
+        /<b class=notranslate>({.*?})<\/b>/g,
+        '$1',
+      ) as T
     }
-    return escapedMessage.replace(/<b class=notranslate>({.*?})<\/b>/g, '$1')
+    return escapedMessage
   }
 
   private decode(
