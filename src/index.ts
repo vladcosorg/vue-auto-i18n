@@ -12,6 +12,7 @@ export interface Options {
   apiProxyURL?: string
   automatic?: boolean
   blacklistedPaths?: string[]
+  onReady?: () => void
 }
 
 function excludeKeys(
@@ -47,11 +48,20 @@ export function extendWithAutoI18n(
   const instance = options.i18nPluginInstance
   const translator = new TranslationApi(options.apiKey, options.apiProxyURL)
 
+  function runOnReadyCallback(): void {
+    if (!options.onReady) {
+      return
+    }
+
+    options.onReady()
+  }
+
   async function translate(newLocale: string): Promise<void> {
     const instance = options.i18nPluginInstance
     const newLocaleMessages = instance.getLocaleMessage(newLocale)
     const newLocaleHasMessages = Object.keys(newLocaleMessages).length
     if (newLocaleHasMessages) {
+      runOnReadyCallback()
       return
     }
 
@@ -71,6 +81,7 @@ export function extendWithAutoI18n(
     translatedMessages = merge(sourceMessages, translatedMessages)
 
     instance.setLocaleMessage(newLocale, translatedMessages)
+    runOnReadyCallback()
   }
 
   if (options.automatic === undefined || options.automatic) {
