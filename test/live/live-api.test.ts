@@ -1,6 +1,6 @@
 import { TranslationApi } from '@/translation-api'
 
-test('Live', async () => {
+test.skip('Live', async () => {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const api = new TranslationApi(process.env.GOOGLE_API_KEY!)
   const result = await api.translate('ru', {

@@ -13,7 +13,7 @@ describe('Format conversion', () => {
       .post(/.*/)
       .reply(200, (uri, request) => {
         const encodedString = new URLSearchParams(request).get('q')
-        expect(encodedString).toEqual('<0>bar</0><1>foo</1>')
+        expect(encodedString).toEqual('<t0>bar</t0><t1>foo</t1>')
         return {
           data: { translations: [{ translatedText: encodedString }] },
         }
@@ -34,7 +34,7 @@ describe('Format conversion', () => {
         data: {
           translations: [
             {
-              translatedText: '<0>translated</0><1>translated</1>',
+              translatedText: '<t0>translated</t0><t1>translated</t1>',
             },
           ],
         },

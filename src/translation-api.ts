@@ -54,7 +54,6 @@ export class TranslationApi {
         response,
       })
     }
-
     return this.decode(translatedText, translationMap)
   }
 
@@ -62,7 +61,7 @@ export class TranslationApi {
     let outputXml = ''
     let index = 0
     for (const translationValue of input.values()) {
-      outputXml += `<${index}>${translationValue}</${index}>`
+      outputXml += `<t${index}>${translationValue}</t${index}>`
       index++
     }
 
@@ -76,7 +75,7 @@ export class TranslationApi {
     const output: Record<string, string> = {}
     const index = 0
     for (const translationKey of translationMap.keys()) {
-      const regex = new RegExp(`<${index}>(.*?)</${index}>`)
+      const regex = new RegExp(`<t${index}>(.*?)</t${index}>`)
       const match = input.match(regex)
       if (!match) {
         continue
