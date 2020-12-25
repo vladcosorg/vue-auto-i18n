@@ -73,7 +73,7 @@ export class TranslationApi {
     translationMap: TranslationMap,
   ): LocaleMessageObject {
     const output: Record<string, string> = {}
-    const index = 0
+    let index = 0
     for (const translationKey of translationMap.keys()) {
       const regex = new RegExp(`<t${index}>(.*?)</t${index}>`)
       const match = input.match(regex)
@@ -82,6 +82,7 @@ export class TranslationApi {
       }
 
       output[translationKey] = match[1].trim()
+      index++
     }
     return unflatten(output)
   }
