@@ -61,11 +61,27 @@ export class TranslationApi {
     let outputXml = ''
     let index = 0
     for (const translationValue of input.values()) {
-      outputXml += `<t${index}>${translationValue}</t${index}>`
+      outputXml += `<t${index}>${this.escapePlaceholders(
+        translationValue,
+      )}</t${index}>`
       index++
     }
 
     return outputXml
+  }
+
+  private escapePlaceholders(unescapedMessage: string): string {
+    if (!unescapedMessage.includes('{')) {
+      return unescapedMessage
+    }
+    return unescapedMessage.replace(/({.*?})/g, '<b class=notranslate>$1</b>')
+  }
+
+  private unescapePlaceholder(escapedMessage: string): string {
+    if (!escapedMessage.includes('{')) {
+      return escapedMessage
+    }
+    return escapedMessage.replace(/<b class=notranslate>({.*?})<\/b>/g, '$1')
   }
 
   private decode(
@@ -81,7 +97,8 @@ export class TranslationApi {
         continue
       }
 
-      output[translationKey] = match[1].trim()
+      output[translationKey] = this.unescapePlaceholder(match[1].trim())
+
       index++
     }
     return unflatten(output)

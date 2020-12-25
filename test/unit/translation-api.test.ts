@@ -53,6 +53,34 @@ describe('Format conversion', () => {
   })
 })
 
+describe('Placeholder escaping', () => {
+  test('Encoder escapes the string placeholders', async () => {
+    expect.assertions(2)
+
+    nock(/.*/)
+      .post(/.*/)
+      .reply(200, (uri, request) => {
+        const encodedString = new URLSearchParams(request).get('q')
+        const expectedOutput =
+          '<t0>foo <b class=notranslate>{one}</b> and <b class=notranslate>{two}</b></t0>'
+        expect(encodedString).toEqual(expectedOutput)
+        return {
+          data: {
+            translations: [{ translatedText: expectedOutput }],
+          },
+        }
+      })
+
+    return expect(
+      api.translate('ru', {
+        test1: 'foo {one} and {two}',
+      }),
+    ).resolves.toEqual({
+      test1: 'foo {one} and {two}',
+    })
+  })
+})
+
 describe('Error handling', () => {
   test('When an invalid API key is specified an error is thrown', () => {
     return expect(
