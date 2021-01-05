@@ -7,9 +7,11 @@
     "url": "https://github.com/chetzof/vue-auto-i18n.git"
   },
   "dependencies": {
+    "@vitalets/google-translate-api": "https://github.com/vkedwardli/google-translate-api.git#batchexecute",
     "flat": "^5.0.2",
     "lodash": "^4.17.20",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^2.6.1",
+    "universal-base64": "^2.1.0"
   },
   "devDependencies": {
     "@types/flat": "^5.0.1",

@@ -1,18 +1,65 @@
+import { GoogleFreeTranslation } from '@/service/google-free-translation'
+import { TranslationService } from '@/translation-service'
 import isPlainObject from 'lodash/isPlainObject'
 import merge from 'lodash/merge'
 import reduce from 'lodash/reduce'
 import { IVueI18n, Locale, LocaleMessageObject } from 'vue-i18n'
 
-import { TranslationApi } from './translation-api'
-
 export interface Options {
   i18nPluginInstance: IVueI18n
-  apiKey: string
   sourceLanguage: Locale
   apiProxyURL?: string
   automatic?: boolean
   blacklistedPaths?: string[]
   onReady?: () => void
+  translationService?: TranslationService
+}
+
+export function extendWithAutoI18n(
+  options: Options,
+): (newLocale: string) => void {
+  const instance = options.i18nPluginInstance
+
+  function runOnReadyCallback(): void {
+    if (!options.onReady) {
+      return
+    }
+
+    options.onReady()
+  }
+
+  async function translate(newLocale: string): Promise<void> {
+    const instance = options.i18nPluginInstance
+    const newLocaleMessages = instance.getLocaleMessage(newLocale)
+    const newLocaleHasMessages = Object.keys(newLocaleMessages).length
+    if (newLocaleHasMessages) {
+      runOnReadyCallback()
+      return
+    }
+
+    const sourceMessages = instance.messages[options.sourceLanguage]
+    let messagesForTranslation = sourceMessages
+
+    messagesForTranslation = excludeKeys(
+      messagesForTranslation,
+      options.blacklistedPaths ?? [],
+    )
+
+    let translatedMessages = await (
+      options.translationService ?? new GoogleFreeTranslation()
+    ).translate(newLocale, messagesForTranslation)
+
+    translatedMessages = merge(sourceMessages, translatedMessages)
+
+    instance.setLocaleMessage(newLocale, translatedMessages)
+    runOnReadyCallback()
+  }
+
+  if (options.automatic === undefined || options.automatic) {
+    instance.vm.$watch('locale', translate)
+  }
+
+  return translate
 }
 
 function excludeKeys(
@@ -40,53 +87,4 @@ function excludeKeys(
     },
     {} as LocaleMessageObject,
   )
-}
-
-export function extendWithAutoI18n(
-  options: Options,
-): (newLocale: string) => void {
-  const instance = options.i18nPluginInstance
-  const translator = new TranslationApi(options.apiKey, options.apiProxyURL)
-
-  function runOnReadyCallback(): void {
-    if (!options.onReady) {
-      return
-    }
-
-    options.onReady()
-  }
-
-  async function translate(newLocale: string): Promise<void> {
-    const instance = options.i18nPluginInstance
-    const newLocaleMessages = instance.getLocaleMessage(newLocale)
-    const newLocaleHasMessages = Object.keys(newLocaleMessages).length
-    if (newLocaleHasMessages) {
-      runOnReadyCallback()
-      return
-    }
-
-    const sourceMessages = instance.messages[options.sourceLanguage]
-    let messagesForTranslation = sourceMessages
-
-    messagesForTranslation = excludeKeys(
-      messagesForTranslation,
-      options.blacklistedPaths ?? [],
-    )
-
-    let translatedMessages = await translator.translate(
-      newLocale,
-      messagesForTranslation,
-    )
-
-    translatedMessages = merge(sourceMessages, translatedMessages)
-
-    instance.setLocaleMessage(newLocale, translatedMessages)
-    runOnReadyCallback()
-  }
-
-  if (options.automatic === undefined || options.automatic) {
-    instance.vm.$watch('locale', translate)
-  }
-
-  return translate
 }

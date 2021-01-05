@@ -1,9 +1,9 @@
+import { GoogleCloudTranslation } from '@/service/google-cloud-translation'
 import nock from 'nock'
 
 import { InformativeError } from '@/error'
-import { TranslationApi } from '@/translation-api'
 
-const api = new TranslationApi('invalid-api-key')
+const api = new GoogleCloudTranslation('INVALID_KEY')
 
 describe('Format conversion', () => {
   test('Flat translation map is encoded into a valid pseudo-XML', async () => {
@@ -13,7 +13,7 @@ describe('Format conversion', () => {
       .post(/.*/)
       .reply(200, (uri, request) => {
         const encodedString = new URLSearchParams(request).get('q')
-        expect(encodedString).toEqual('<t0>bar</t0><t1>foo</t1>')
+        expect(encodedString).toEqual('<b0>bar</b0><b1>foo</b1>')
         return {
           data: { translations: [{ translatedText: encodedString }] },
         }
@@ -35,7 +35,7 @@ describe('Format conversion', () => {
           translations: [
             {
               translatedText:
-                '<t0>translated-first</t0><t1>translated-second</t1>',
+                '<b0>translated-first</b0><b1>translated-second</b1>',
             },
           ],
         },
@@ -61,8 +61,7 @@ describe('Placeholder escaping', () => {
       .post(/.*/)
       .reply(200, (uri, request) => {
         const encodedString = new URLSearchParams(request).get('q')
-        const expectedOutput =
-          '<t0>foo <b class=notranslate>{one}</b> and <b class=notranslate>{two}</b></t0>'
+        const expectedOutput = '<b0>foo <p0/> and <p1/></b0>'
         expect(encodedString).toEqual(expectedOutput)
         return {
           data: {
@@ -77,6 +76,33 @@ describe('Placeholder escaping', () => {
       }),
     ).resolves.toEqual({
       test1: 'foo {one} and {two}',
+    })
+  })
+
+  test('Encoder escapes the linked messages', async () => {
+    expect.assertions(2)
+
+    nock(/.*/)
+      .post(/.*/)
+      .reply(200, (uri, request) => {
+        const encodedString = new URLSearchParams(request).get('q')
+        const expectedOutput = '<b0>foo <l0/> and <l1/></b0>'
+        expect(encodedString).toEqual(expectedOutput)
+        return {
+          data: {
+            translations: [{ translatedText: expectedOutput }],
+          },
+        }
+      })
+
+    return expect(
+      api.translate('ru', {
+        test1:
+          'foo @.lower:restriction.travel.value.forbidden and @:restriction.travel.value.forbidden',
+      }),
+    ).resolves.toEqual({
+      test1:
+        'foo @.lower:restriction.travel.value.forbidden and @:restriction.travel.value.forbidden',
     })
   })
 })

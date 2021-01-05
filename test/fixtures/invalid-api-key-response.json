@@ -3,18 +3,13 @@
         "scope": "https://translation.googleapis.com:443",
         "method": "POST",
         "path": "/language/translate/v2",
-        "body": "q=%3Ct0%3Ebar%3C%2Ft0%3E&target=ru&format=html&key=invalid-api-key",
+        "body": "q=%3Cb0%3Ebar%3C%2Fb0%3E&target=ru&format=html&key=INVALID_KEY",
         "status": 400,
         "response": [
             "1f",
             "8b",
             "08",
-            "00",
-            "00",
-            "00",
-            "00",
-            "00",
-            "02ffad8ebf0ac23010c6f73ec591594a0727b78222052da5a88b885ccd51c4b4d15c2a48e9bb9ba4197c00a7e3fbc3efbe310110648c366205a3134edeb424a79659b6988d8e98b1f59ec8ab021ef4815e5b78a3bacb142a45c8044f64069c4d88b5544442f8c00e700e1ae2abffd00345ea0eefbd87b44a37a87e33e3103a640dca9a5e03b115319ec2bdc49d6cd10e7ea728ca53be2bd6d7bcde1ef79bf2e0fb5332255fd67932af31010000"
+            "000000000002ffad8ebf0ac23010c6f73ec591594a0727b78222052da5a88b885ccd51c4b4d15c2a48e9bb9ba4197c00a7e3fbc3efbe310110648c366205a3134edeb424a79659b6988d8e98b1f59ec8ab021ef4815e5b78a3bacb142a45c8044f64069c4d88b5544442f8c00e700e1ae2abffd00345ea0eefbd87b44a37a87e33e3103a640dca9a5e03b115319ec2bdc49d6cd10e7ea728ca53be2bd6d7bcde1ef79bf2e0fb5332255fd67932af31010000"
         ],
         "rawHeaders": [
             "Vary",
@@ -28,7 +23,7 @@
             "Content-Encoding",
             "gzip",
             "Date",
-            "Fri, 25 Dec 2020 18:51:10 GMT",
+            "Tue, 05 Jan 2021 22:11:39 GMT",
             "Server",
             "ESF",
             "Cache-Control",
