@@ -54,10 +54,6 @@
   "engines": {
     "node": ">=12"
   },
-  "files": [
-    "dist",
-    "src"
-  ],
   "homepage": "https://github.com/chetzof/vue-auto-i18n",
   "husky": {
     "hooks": {
@@ -72,8 +68,8 @@
     "vuejs"
   ],
   "license": "MIT",
-  "main": "dist/index.js",
-  "module": "dist/vue-auto-i18n.esm.js",
+  "main": "index.js",
+  "module": "vue-auto-i18n.esm.js",
   "peerDependencies": {
     "vue": "^2.0.0",
     "vue-i18n": "^8.0.0"
@@ -125,5 +121,5 @@
       "limit": "10 KB"
     }
   ],
-  "typings": "dist/index.d.ts"
+  "typings": "index.d.ts"
 }
