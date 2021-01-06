@@ -110,7 +110,6 @@
     "generate-supported-languages": "ts-node bin/generate-supported-languages.ts",
     "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx  ./",
     "postbuild": "cp package.json dist/package.json && cp yarn.lock dist/yarn.lock && cp README.md dist/README.md",
-    "prepare": "tsdx build",
     "size": "size-limit",
     "start": "tsdx watch --tsconfig ./tsconfig.build.json",
     "test": "tsdx test --passWithNoTests",
