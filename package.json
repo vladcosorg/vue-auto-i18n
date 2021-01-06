@@ -7,6 +7,7 @@
     "@vitalets/google-translate-api": "https://github.com/vkedwardli/google-translate-api.git#batchexecute",
     "flat": "^5.0.2",
     "lodash": "^4.17.20",
+    "lodash-es": "^4.17.20",
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {
@@ -14,7 +15,7 @@
     "@types/flat": "^5.0.1",
     "@types/fs-extra": "^9.0.5",
     "@types/jest": "^26.0.18",
-    "@types/lodash": "^4.14.161",
+    "@types/lodash": "^4.14.167",
     "@types/node-fetch": "^2.5.7",
     "@typescript-eslint/eslint-plugin": "^4.9.1",
     "@typescript-eslint/parser": "^4.9.1",
@@ -99,17 +100,19 @@
   },
   "scripts": {
     "analyze": "size-limit --why",
-    "build": "tsdx build --tsconfig ./tsconfig.build.json && npm run generate-supported-languages",
+    "build": "tsdx build --tsconfig ./tsconfig.build.json",
+    "postbuild": "run-p build:copy-files build:generate-supported-languages",
     "commit": "cz",
     "fixpack": "fixpack",
     "format": "eslint --cache --ext .js,.jsx,.ts,.tsx,.json --fix ./ >/dev/null 2>&1 || true",
-    "generate-supported-languages": "ts-node bin/generate-supported-languages.ts",
     "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx  ./",
-    "postbuild": "cp package.json dist/package.json && cp yarn.lock dist/yarn.lock && cp README.md dist/README.md",
     "size": "size-limit",
-    "start": "tsdx watch --tsconfig ./tsconfig.build.json",
+    "start": "run-p postbuild watch",
+    "watch": "tsdx watch --noClean --tsconfig ./tsconfig.build.json",
     "test": "tsdx test --passWithNoTests",
-    "test--watch": "tsdx test --watch"
+    "test--watch": "tsdx test --watch",
+    "build:copy-files": "cp package.json dist/package.json && cp yarn.lock dist/yarn.lock && cp README.md dist/README.md",
+    "build:generate-supported-languages": "ts-node bin/generate-supported-languages.ts"
   },
   "size-limit": [
     {
