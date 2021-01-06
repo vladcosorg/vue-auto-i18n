@@ -1,4 +1,4 @@
-import { TranslationService } from '@/translation-service'
+import { TranslationService } from '../translation-service'
 import { Locale, LocaleMessageObject } from 'vue-i18n'
 import fetch, { RequestInfo, RequestInit } from 'node-fetch'
 
@@ -16,7 +16,7 @@ class Proxy implements TranslationService {
         }),
       }),
     )
-    const jsonReponse = await response.json()
-    return jsonReponse
+    const jsonResponse = await response.json()
+    return jsonResponse
   }
 }

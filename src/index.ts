@@ -1,5 +1,5 @@
-import { GoogleFree } from '@/service/google-free'
-import { TranslationService } from '@/translation-service'
+import { GoogleFree } from './service/google-free'
+import { TranslationService } from './translation-service'
 import isPlainObject from 'lodash/isPlainObject'
 import merge from 'lodash/merge'
 import reduce from 'lodash/reduce'

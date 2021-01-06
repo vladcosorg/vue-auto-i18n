@@ -1,3 +1,8 @@
+*.log
+.DS_Store
+node_modules
+dist
+.idea
 /var
 /dist
 /.eslintcache

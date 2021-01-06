@@ -1,4 +1,4 @@
-import { GoogleFree } from '@/service/google-free'
+import { GoogleFree } from '../../../src/service/google-free'
 
 const api = new GoogleFree()
 
@@ -8,7 +8,7 @@ describe('Live API (may be unstable)', () => {
       foo: 'привет',
     })
   })
-  test.only('The nostranslate tags are respected', async () => {
+  test('The nostranslate tags are respected', async () => {
     await expect(
       api.translate('ru', {
         foo: 'hi {destination}',

@@ -49,7 +49,7 @@ module.exports = {
       {
         unusedExports: true,
         missingExports: true,
-        ignoreExports: ['**/*.d.ts', 'test/**/*.*', '*.js'],
+        ignoreExports: ['**/*.d.ts', 'test/**/*.*', '*.js', 'src/index.ts'],
       },
     ],
     'import/newline-after-import': 'warn',

@@ -1,7 +1,6 @@
-import { GoogleCloud } from '@/service/google-cloud'
 import nock from 'nock'
-
-import { InformativeError } from '@/error'
+import { InformativeError } from '../../../src/error'
+import { GoogleCloud } from '../../../src/service/google-cloud'
 
 const api = new GoogleCloud('INVALID_KEY')
 
@@ -11,7 +10,7 @@ describe('Format conversion', () => {
 
     nock(/.*/)
       .post(/.*/)
-      .reply(200, (uri, request) => {
+      .reply(200, (_uri, request) => {
         const encodedString = new URLSearchParams(request).get('q')
         expect(encodedString).toEqual('<b0>bar</b0><b1>foo</b1>')
         return {
@@ -59,7 +58,7 @@ describe('Placeholder escaping', () => {
 
     nock(/.*/)
       .post(/.*/)
-      .reply(200, (uri, request) => {
+      .reply(200, (_uri, request) => {
         const encodedString = new URLSearchParams(request).get('q')
         const expectedOutput = '<b0>foo <p0/> and <p1/></b0>'
         expect(encodedString).toEqual(expectedOutput)
@@ -84,7 +83,7 @@ describe('Placeholder escaping', () => {
 
     nock(/.*/)
       .post(/.*/)
-      .reply(200, (uri, request) => {
+      .reply(200, (_uri, request) => {
         const encodedString = new URLSearchParams(request).get('q')
         const expectedOutput = '<b0>foo <l0/> and <l1/></b0>'
         expect(encodedString).toEqual(expectedOutput)

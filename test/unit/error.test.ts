@@ -1,4 +1,4 @@
-import { InformativeError } from '@/error'
+import { InformativeError } from '../../src/error'
 // eslint-disable-next-line @typescript-eslint/no-empty-interface,import/no-unused-modules
 interface CircularObject extends Record<string, string | CircularObject> {}
 

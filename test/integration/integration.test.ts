@@ -8,8 +8,8 @@ import VueI18n, {
   LocaleMessageObject,
 } from 'vue-i18n'
 
-import { extendWithAutoI18n, Options } from '@/index'
-import { GoogleCloud } from '@/service/google-cloud'
+import { extendWithAutoI18n, Options } from '../../src'
+import { GoogleCloud } from '../../src/service/google-cloud'
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function mapValuesDeep(obj: any, fn: any, key?: any): any {
   return isArray(obj)
@@ -21,7 +21,7 @@ function mapValuesDeep(obj: any, fn: any, key?: any): any {
     : fn(obj, key)
 }
 
-jest.mock('@/service/google-cloud-translation')
+jest.mock('../../src/service/google-cloud')
 const mockedTranslationAPI = mocked(GoogleCloud)
 
 afterEach(() => {
@@ -53,7 +53,7 @@ function mockWithResponseMessages(
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const instance = mockedTranslationAPI.mock.instances.pop()!
   instance['translate'] = (
-    targetLanguage: Locale,
+    _targetLanguage: Locale,
     messages: LocaleMessageObject,
   ): Promise<LocaleMessageObject> => {
     return new Promise<LocaleMessageObject>((resolve) => {

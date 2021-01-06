@@ -1,8 +1,8 @@
-import { GoogleFree } from '@/service/google-free'
+import { GoogleFree } from './google-free'
 
 import fetch from 'node-fetch'
 
-import { InformativeError } from '@/error'
+import { InformativeError } from '../error'
 
 type TranslationAPIResponse = {
   data: { translations: { translatedText: string }[] }
