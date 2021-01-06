@@ -1,4 +1,4 @@
-import { GoogleFreeTranslation } from '@/service/google-free-translation'
+import { GoogleFree } from '@/service/google-free'
 import * as util from 'util'
 
 // test.skip('Live cloud', async () => {
@@ -16,7 +16,7 @@ import * as util from 'util'
 
 test.skip('Live free', async () => {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const api = new GoogleFreeTranslation()
+  const api = new GoogleFree()
   const result = await api.translate('fr', {
     status: {
       allowed: 'Allowed',

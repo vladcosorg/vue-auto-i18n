@@ -1,4 +1,4 @@
-import { GoogleFreeTranslation } from '@/service/google-free-translation'
+import { GoogleFree } from '@/service/google-free'
 import { TranslationService } from '@/translation-service'
 import isPlainObject from 'lodash/isPlainObject'
 import merge from 'lodash/merge'
@@ -46,7 +46,7 @@ export function extendWithAutoI18n(
     )
 
     let translatedMessages = await (
-      options.translationService ?? new GoogleFreeTranslation()
+      options.translationService ?? new GoogleFree()
     ).translate(newLocale, messagesForTranslation)
 
     translatedMessages = merge(sourceMessages, translatedMessages)
@@ -88,3 +88,5 @@ function excludeKeys(
     {} as LocaleMessageObject,
   )
 }
+
+export { TranslationService }

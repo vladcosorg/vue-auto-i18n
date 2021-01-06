@@ -6,7 +6,7 @@ import { Locale, LocaleMessageObject } from 'vue-i18n'
 
 type TranslationMap = Map<string, string>
 
-export class GoogleFreeTranslation implements TranslationService {
+export class GoogleFree implements TranslationService {
   protected linkedMessageIndex: string[] = []
   protected placeholderIndex: string[] = []
 

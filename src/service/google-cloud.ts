@@ -1,14 +1,14 @@
-import { GoogleFreeTranslation } from '@/service/google-free-translation'
+import { GoogleFree } from '@/service/google-free'
 
 import fetch from 'node-fetch'
 
-import { InformativeError } from '../error'
+import { InformativeError } from '@/error'
 
 type TranslationAPIResponse = {
   data: { translations: { translatedText: string }[] }
 }
 
-export class GoogleCloudTranslation extends GoogleFreeTranslation {
+export class GoogleCloud extends GoogleFree {
   constructor(
     private readonly apiKey: string,
     private readonly apiProxyURL?: string,

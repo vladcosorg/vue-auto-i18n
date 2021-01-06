@@ -1,9 +1,9 @@
-import { GoogleCloudTranslation } from '@/service/google-cloud-translation'
+import { GoogleCloud } from '@/service/google-cloud'
 import nock from 'nock'
 
 import { InformativeError } from '@/error'
 
-const api = new GoogleCloudTranslation('INVALID_KEY')
+const api = new GoogleCloud('INVALID_KEY')
 
 describe('Format conversion', () => {
   test('Flat translation map is encoded into a valid pseudo-XML', async () => {

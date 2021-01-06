@@ -1,6 +1,6 @@
-import { GoogleFreeTranslation } from '@/service/google-free-translation'
+import { GoogleFree } from '@/service/google-free'
 
-const api = new GoogleFreeTranslation()
+const api = new GoogleFree()
 
 describe('Live API (may be unstable)', () => {
   test('Simple string returns translation', async () => {
