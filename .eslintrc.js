@@ -49,7 +49,13 @@ module.exports = {
       {
         unusedExports: true,
         missingExports: true,
-        ignoreExports: ['**/*.d.ts', 'test/**/*.*', '*.js', 'src/index.ts'],
+        ignoreExports: [
+          '**/*.d.ts',
+          'test/**/*.*',
+          '*.js',
+          'src/index.ts',
+          'jest.config.js',
+        ],
       },
     ],
     'import/newline-after-import': 'warn',
