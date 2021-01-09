@@ -1,5 +1,5 @@
 import translate from '@vitalets/google-translate-api'
-import { TranslationService } from '../translation-service'
+import { TranslationService } from './translation-service'
 
 import flatten, { unflatten } from 'flat'
 import { Locale, LocaleMessageObject } from 'vue-i18n'

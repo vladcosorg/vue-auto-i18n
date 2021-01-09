@@ -37,6 +37,7 @@ module.exports = {
     'unicorn/no-unused-properties': 'warn',
     'unicorn/prefer-replace-all': 'warn',
     'unicorn/no-nested-ternary': 'off',
+    'unicorn/number-literal-case': 'off',
 
     'import/no-unresolved': 'warn',
     'import/extensions': ['warn', 'always', { js: 'never', ts: 'never' }],

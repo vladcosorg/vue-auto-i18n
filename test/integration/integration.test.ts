@@ -7,9 +7,10 @@ import VueI18n, {
   Locale,
   LocaleMessageObject,
 } from 'vue-i18n'
+import { Options } from '../../src/integration/vue-i18n'
+import { GoogleFree } from '../../src/translation-service/google-free'
+import { integrateWithVueI18n } from '../../src'
 
-import { extendWithAutoI18n, Options } from '../../src'
-import { GoogleCloud } from '../../src/service/google-cloud'
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function mapValuesDeep(obj: any, fn: any, key?: any): any {
   return isArray(obj)
@@ -21,8 +22,8 @@ function mapValuesDeep(obj: any, fn: any, key?: any): any {
     : fn(obj, key)
 }
 
-jest.mock('../../src/service/google-cloud')
-const mockedTranslationAPI = mocked(GoogleCloud)
+jest.mock('../../src/translation-service/google-free')
+const mockedTranslationAPI = mocked(GoogleFree)
 
 afterEach(() => {
   mockedTranslationAPI.mockReset()
@@ -38,10 +39,10 @@ function setupWithMessages(
     locale: 'en',
     ...vueI18nOptions,
   }) as unknown) as IVueI18n
-  extendWithAutoI18n({
+  integrateWithVueI18n({
     i18nPluginInstance: i18n,
     sourceLanguage: 'en',
-    translationService: new GoogleCloud('INVALID_KEY'),
+    translationService: new GoogleFree(),
     ...pluginOptions,
   })
   return i18n

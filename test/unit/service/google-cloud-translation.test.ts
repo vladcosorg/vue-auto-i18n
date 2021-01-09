@@ -1,6 +1,6 @@
 import nock from 'nock'
 import { InformativeError } from '../../../src/error'
-import { GoogleCloud } from '../../../src/service/google-cloud'
+import { GoogleCloud } from '../../../src/translation-service/google-cloud'
 
 const api = new GoogleCloud('INVALID_KEY')
 

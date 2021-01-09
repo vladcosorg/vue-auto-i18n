@@ -1,4 +1,4 @@
-import { GoogleFree } from '../../../src/service/google-free'
+import { GoogleFree } from '../../../src/translation-service/google-free'
 
 const api = new GoogleFree()
 

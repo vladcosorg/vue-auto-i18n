@@ -1,5 +1,5 @@
-import { GoogleCloud } from '../../src/service/google-cloud'
-import { GoogleFree } from '../../src/service/google-free'
+import { GoogleCloud } from '../../src/translation-service/google-cloud'
+import { GoogleFree } from '../../src/translation-service/google-free'
 
 // eslint-disable-next-line jest/no-disabled-tests
 test.skip('Live cloud', async () => {

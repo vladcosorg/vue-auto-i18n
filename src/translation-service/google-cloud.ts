@@ -9,10 +9,7 @@ type TranslationAPIResponse = {
 }
 
 export class GoogleCloud extends GoogleFree {
-  constructor(
-    private readonly apiKey: string,
-    private readonly apiProxyURL?: string,
-  ) {
+  constructor(private readonly apiKey: string) {
     super()
   }
 
@@ -28,8 +25,7 @@ export class GoogleCloud extends GoogleFree {
     })
 
     const response = await fetch(
-      this.apiProxyURL ??
-        'https://translation.googleapis.com/language/translate/v2',
+      'https://translation.googleapis.com/language/translate/v2',
       { method: 'POST', body: params as never },
     )
     const jsonReponse = await response.json()
