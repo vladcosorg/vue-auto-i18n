@@ -11,9 +11,9 @@ export interface Options extends TranslatorOptions {
   translationService?: TranslationService
 }
 
-export function integrateWithVueI18n(
-  options: Options,
-): (newLocale: string) => void {
+export type ManualTranslator = (newLocale: string) => Promise<void>
+
+export function integrateWithVueI18n(options: Options): ManualTranslator {
   const instance = options.i18nPluginInstance
 
   function runOnReadyCallback(): void {
@@ -24,7 +24,7 @@ export function integrateWithVueI18n(
     options.onReady()
   }
 
-  async function translate(newLocale: string): Promise<void> {
+  const translate: ManualTranslator = async (newLocale: string) => {
     const instance = options.i18nPluginInstance
     const newLocaleMessages = instance.getLocaleMessage(newLocale)
     const newLocaleHasMessages = Object.keys(newLocaleMessages).length
