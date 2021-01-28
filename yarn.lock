@@ -1920,9 +1920,10 @@
     "@typescript-eslint/types" "4.12.0"
     eslint-visitor-keys "^2.0.0"
 
-"@vitalets/google-translate-api@https://github.com/vkedwardli/google-translate-api.git#batchexecute":
-  version "4.0.0"
-  resolved "https://github.com/vkedwardli/google-translate-api.git#2e8cd6baed2a169a7f3f70bcb20ceaf7a5532fe2"
+"@vitalets/google-translate-api@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@vitalets/google-translate-api/-/google-translate-api-5.0.0.tgz#3c6f4ed3a880c776d132bcb4c55816cce34f1025"
+  integrity sha512-fRJzDT/rhF5S6cc/amgKb+AeIaRcoVzsuBAvkNB4kRv8NUBq/PBIy1pKREfPacEfsXno5i3EWPn2DPm2zim86w==
   dependencies:
     configstore "^5.0.1"
     got "^9.6.0"

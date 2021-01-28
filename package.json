@@ -4,7 +4,7 @@
   "author": "chetzof",
   "bugs": "https://github.com/chetzof/vue-auto-i18n/issues",
   "dependencies": {
-    "@vitalets/google-translate-api": "https://github.com/vkedwardli/google-translate-api.git#batchexecute",
+    "@vitalets/google-translate-api": "^5.0.0",
     "flat": "^5.0.2",
     "lodash": "^4.17.20",
     "lodash-es": "^4.17.20",

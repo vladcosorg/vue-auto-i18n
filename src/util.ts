@@ -45,3 +45,49 @@ export function excludeKeys(
     {} as LocaleMessageObject,
   )
 }
+
+export function splitStringIntoChunks(
+  input: string,
+  maxLength: number,
+): string[] {
+  const inputLength = input.length
+  if (inputLength <= maxLength) {
+    return [input]
+  }
+
+  const chunks = []
+  let beginIndex = 0
+  while (beginIndex < inputLength) {
+    let endIndex = beginIndex + maxLength
+    let newChunk = input.slice(beginIndex, endIndex)
+
+    // Find possible invalid tags inside a chunk
+    // It will also find the tags that don't need the closing pair
+    const matches = [...newChunk.matchAll(/<([^/]*?\d+)>/g)]
+    if (matches.length > 0) {
+      const found = matches
+        .map((item) => {
+          const needle = `</${item[1]}>`
+          const index = input.indexOf(needle, beginIndex)
+          if (!index) {
+            return
+          }
+
+          return index + needle.length
+        })
+        .filter((item) => item)
+
+      // This may evaluate to false if the found tags don't required the closing pair
+      // Or the input contains invalid tags
+      if (found.length > 0) {
+        endIndex = Math.max(...(found as number[]))
+        newChunk = input.slice(beginIndex, endIndex)
+      }
+    }
+
+    // No invalid tags found
+    chunks.push(newChunk)
+    beginIndex = endIndex
+  }
+  return chunks
+}

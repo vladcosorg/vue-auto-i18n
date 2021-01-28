@@ -1,4 +1,5 @@
 import translate from '@vitalets/google-translate-api'
+import { splitStringIntoChunks } from '../util'
 import { TranslationService } from './translation-service'
 
 import flatten, { unflatten } from 'flat'
@@ -30,8 +31,20 @@ export class GoogleFree implements TranslationService {
     encodedPayload: string,
     targetLanguage: string,
   ): Promise<string> {
-    const response = await translate(encodedPayload, { to: targetLanguage })
-    return response.text
+    const splitPayloads = []
+    if (encodedPayload.length > 5000) {
+      splitPayloads.push(...splitStringIntoChunks(encodedPayload, 4000))
+    } else {
+      splitPayloads.push(encodedPayload)
+    }
+    const result = []
+    for (const payload of splitPayloads) {
+      const response = await translate(payload, {
+        to: targetLanguage,
+      })
+      result.push(response.text)
+    }
+    return result.join('')
   }
 
   protected encode(input: TranslationMap): string {
@@ -95,7 +108,7 @@ export class GoogleFree implements TranslationService {
     let index = 0
     for (const translationKey of translationMap.keys()) {
       const regex = new RegExp(
-        `<\\s?b${index}\\s?>(.*?)<\\s?/\\s?b${index}\\s?>`,
+        `<\\s?b${index}\\s?>([\\s\\S]*?)<\\s?/\\s?b${index}\\s?>`,
         'i',
       )
       const match = input.match(regex)
