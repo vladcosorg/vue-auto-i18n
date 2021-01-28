@@ -60,14 +60,16 @@ export function splitStringIntoChunks(
   while (beginIndex < inputLength) {
     let endIndex = beginIndex + maxLength
     let newChunk = input.slice(beginIndex, endIndex)
-
     // Find possible invalid tags inside a chunk
     // It will also find the tags that don't need the closing pair
-    const matches = [...newChunk.matchAll(/<([^/]*?\d+)>/g)]
+    const matches = []
+    for (const a of newChunk.matchAll(/<([^/]*?\d+)>/g)) {
+      matches.push(a[1])
+    }
     if (matches.length > 0) {
       const found = matches
         .map((item) => {
-          const needle = `</${item[1]}>`
+          const needle = `</${item}>`
           const index = input.indexOf(needle, beginIndex)
           if (!index) {
             return
