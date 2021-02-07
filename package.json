@@ -108,7 +108,7 @@
     "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx  ./",
     "size": "size-limit",
     "start": "run-p postbuild watch",
-    "watch": "tsdx watch --noClean --tsconfig ./tsconfig.build.json",
+    "watch": "npm run postbuild && tsdx watch --noClean --tsconfig ./tsconfig.build.json",
     "test": "tsdx test --passWithNoTests",
     "test--watch": "tsdx test --watch",
     "build:copy-files": "cp package.json dist/package.json && cp yarn.lock dist/yarn.lock && cp README.md dist/README.md",
