@@ -39,7 +39,7 @@ export async function translateMessageObject(
   )
 
   const cache = getCache(options)
-  const cacheKey = new CacheKey(newLocale, sourceMessages)
+  const cacheKey = new CacheKey(newLocale, messagesForTranslation)
 
   let outputMessages: LocaleMessageObject
   if (await cache.has(cacheKey)) {
