@@ -4,7 +4,7 @@ import { CacheType } from '../cache-type'
 export class InMemoryCache implements CacheType {
   protected cache = new Map()
 
-  public has(key: CacheKey): boolean {
+  public async has(key: CacheKey): Promise<boolean> {
     return this.cache.has(key.getKey())
   }
 

@@ -6,7 +6,7 @@ export class ChainedCache implements CacheType {
   constructor(...caches: CacheType[]) {
     this.cacheChain = caches
   }
-  get<T>(key: CacheKey): T | undefined {
+  async get<T>(key: CacheKey): Promise<T | undefined> {
     const failedCaches: CacheType[] = []
     for (const cache of this.cacheChain) {
       const result = cache.get<T>(key)
@@ -23,9 +23,9 @@ export class ChainedCache implements CacheType {
 
     return
   }
-  has(key: CacheKey): boolean {
+  async has(key: CacheKey): Promise<boolean> {
     for (const cache of this.cacheChain) {
-      const result = cache.has(key)
+      const result = await cache.has(key)
 
       if (result) {
         return result
@@ -35,9 +35,9 @@ export class ChainedCache implements CacheType {
     return false
   }
 
-  set(key: CacheKey, value: unknown): void {
+  async set(key: CacheKey, value: unknown): Promise<void> {
     for (const cache of this.cacheChain) {
-      cache.set(key, value)
+      await cache.set(key, value)
     }
   }
 }
