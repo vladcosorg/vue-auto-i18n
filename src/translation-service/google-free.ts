@@ -10,6 +10,12 @@ type TranslationMap = Map<string, string>
 export class GoogleFree implements TranslationService {
   protected linkedMessageIndex: string[] = []
   protected placeholderIndex: string[] = []
+  protected debug: {
+    initial?: string
+    sendEncoded?: string
+    receivedEncoded?: string
+    final?: string
+  }[] = []
 
   async translate(
     targetLanguage: Locale,
@@ -24,7 +30,13 @@ export class GoogleFree implements TranslationService {
       encodedPayload,
       targetLanguage,
     )
-    return this.decode(translatedText, translationMap)
+
+    const content = this.decode(translatedText, translationMap)
+    console.log(translatedText)
+    for (const item of this.debug) {
+      console.log(item)
+    }
+    return content
   }
 
   protected async sendRequestAndGetResponse(
@@ -51,7 +63,10 @@ export class GoogleFree implements TranslationService {
     let outputXml = ''
     let index = 0
     for (const translationValue of input.values()) {
-      outputXml += `<b${index}>${this.escapePlaceholders(
+      this.debug[index] = { initial: translationValue }
+      outputXml += this.debug[
+        index
+      ].sendEncoded = `<b${index}>${this.escapePlaceholders(
         this.escapeLinkedMessages(translationValue),
       )}</b${index}>`
       index++
@@ -112,11 +127,9 @@ export class GoogleFree implements TranslationService {
         'i',
       )
       const match = input.match(regex)
-      if (!match) {
-        continue
+      if (match) {
+        output[translationKey] = this.debug[index].final = match[1].trim()
       }
-
-      output[translationKey] = match[1].trim()
 
       index++
     }
