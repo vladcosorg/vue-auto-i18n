@@ -31,12 +31,7 @@ export class GoogleFree implements TranslationService {
       targetLanguage,
     )
 
-    const content = this.decode(translatedText, translationMap)
-    console.log(translatedText)
-    for (const item of this.debug) {
-      console.log(item)
-    }
-    return content
+    return this.decode(translatedText, translationMap)
   }
 
   protected async sendRequestAndGetResponse(
@@ -128,7 +123,7 @@ export class GoogleFree implements TranslationService {
       )
       const match = input.match(regex)
       if (match) {
-        output[translationKey] = this.debug[index].final = match[1].trim()
+        output[translationKey] = match[1].trim()
       }
 
       index++
