@@ -1,4 +1,5 @@
 import { NoCache } from './cache/type/no-cache'
+import { InMemoryCache } from './cache/type/in-memory-cache'
 import { integrateWithVueI18n, ManualTranslator } from './integration/vue-i18n'
 import { translateMessageObject } from './translator'
 import { TranslationService } from './translation-service/translation-service'
@@ -11,4 +12,5 @@ export {
   CacheType,
   ManualTranslator,
   NoCache,
+  InMemoryCache,
 }
