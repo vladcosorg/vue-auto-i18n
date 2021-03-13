@@ -5,7 +5,7 @@ const api = new GoogleFree()
 describe('Live API (may be unstable)', () => {
   test('Simple string returns translation', async () => {
     await expect(api.translate('ru', { foo: 'hi' })).resolves.toEqual({
-      foo: 'привет',
+      foo: 'Привет',
     })
   })
   test('The nostranslate tags are respected', async () => {
