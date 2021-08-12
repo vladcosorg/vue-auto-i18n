@@ -69,7 +69,7 @@ export abstract class GoogleBase {
     this.placeholderIndex.forEach((replacement, index) => {
       input = input.replace(
         new RegExp(`<\\s?p\\s?${index}\\s?/\\s?>`, 'i'),
-        replacement,
+        ` ${replacement}`,
       )
     })
 
