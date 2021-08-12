@@ -1,16 +1,36 @@
-import { GoogleFree } from './google-free'
+import flatten from 'flat'
+import { Locale, LocaleMessageObject } from 'vue-i18n'
+import { GoogleBase, TranslationMap } from './google-base'
 
 import fetch from 'node-fetch'
 
 import { InformativeError } from '../error'
+import { TranslationService } from './translation-service'
 
 type TranslationAPIResponse = {
   data: { translations: { translatedText: string }[] }
 }
 
-export class GoogleCloud extends GoogleFree {
+export class GoogleCloud extends GoogleBase implements TranslationService {
   constructor(private readonly apiKey: string) {
     super()
+  }
+
+  async translate(
+    targetLanguage: Locale,
+    messages: LocaleMessageObject,
+  ): Promise<LocaleMessageObject> {
+    const translationMap: TranslationMap = new Map(
+      Object.entries(flatten(messages)),
+    )
+    const encodedPayload = this.encode(translationMap)
+
+    const translatedText = await this.sendRequestAndGetResponse(
+      encodedPayload,
+      targetLanguage,
+    )
+
+    return this.decode(translatedText, translationMap)
   }
 
   protected async sendRequestAndGetResponse(

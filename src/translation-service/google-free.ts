@@ -1,13 +1,12 @@
 import translate from '@vitalets/google-translate-api'
 import { splitStringIntoChunks } from '../util'
+import { GoogleBase, TranslationMap } from './google-base'
 import { TranslationService } from './translation-service'
 
-import flatten, { unflatten } from 'flat'
+import flatten from 'flat'
 import { Locale, LocaleMessageObject } from 'vue-i18n'
 
-type TranslationMap = Map<string, string>
-
-export class GoogleFree implements TranslationService {
+export class GoogleFree extends GoogleBase implements TranslationService {
   protected linkedMessageIndex: string[] = []
   protected placeholderIndex: string[] = []
   protected debug: {
@@ -52,83 +51,5 @@ export class GoogleFree implements TranslationService {
       result.push(response.text)
     }
     return result.join('')
-  }
-
-  protected encode(input: TranslationMap): string {
-    let outputXml = ''
-    let index = 0
-    for (const translationValue of input.values()) {
-      this.debug[index] = { initial: translationValue }
-      outputXml += this.debug[
-        index
-      ].sendEncoded = `<b${index}>${this.escapePlaceholders(
-        this.escapeLinkedMessages(translationValue),
-      )}</b${index}>`
-      index++
-    }
-    return outputXml
-  }
-
-  protected escapePlaceholders<T extends string | number>(
-    unescapedMessage: T,
-  ): T {
-    if (typeof unescapedMessage == 'string' && unescapedMessage.includes('{')) {
-      return unescapedMessage.replace(/({.*?})/g, (...matches) => {
-        const length = this.placeholderIndex.push(matches[1])
-        return `<p${length - 1}/>`
-      }) as T
-    }
-
-    return unescapedMessage
-  }
-
-  protected escapeLinkedMessages<T extends string | number>(
-    unescapedMessage: T,
-  ): T {
-    if (typeof unescapedMessage == 'string' && unescapedMessage.includes('@')) {
-      return unescapedMessage.replace(/(@([.:])[^\s)]+\)?)/g, (...matches) => {
-        const length = this.linkedMessageIndex.push(matches[1])
-        return `<l${length - 1}/>`
-      }) as T
-    }
-
-    return unescapedMessage
-  }
-
-  protected decode(
-    input: string,
-    translationMap: TranslationMap,
-  ): LocaleMessageObject {
-    const output: Record<string, string> = {}
-
-    this.linkedMessageIndex.forEach((replacement, index) => {
-      input = input.replace(
-        new RegExp(`<\\s?l\\s?${index}\\s?/\\s?>`, 'i'),
-        replacement,
-      )
-    })
-
-    this.placeholderIndex.forEach((replacement, index) => {
-      input = input.replace(
-        new RegExp(`<\\s?p\\s?${index}\\s?/\\s?>`, 'i'),
-        replacement,
-      )
-    })
-
-    let index = 0
-    for (const translationKey of translationMap.keys()) {
-      const regex = new RegExp(
-        `<\\s?b${index}\\s?>([\\s\\S]*?)<\\s?/\\s?b${index}\\s?>`,
-        'i',
-      )
-      const match = input.match(regex)
-      if (match) {
-        output[translationKey] = match[1].trim()
-      }
-
-      index++
-    }
-
-    return unflatten(output)
   }
 }
