@@ -81,7 +81,7 @@ export abstract class GoogleBase {
       )
       const match = input.match(regex)
       if (match) {
-        output[translationKey] = match[1].trim()
+        output[translationKey] = match[1].trim().replace(/ +/g, ' ')
       }
 
       index++
