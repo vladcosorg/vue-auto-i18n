@@ -10,7 +10,7 @@ export interface Options extends TranslatorOptions {
   automatic?: boolean
   blacklistedPaths?: string[]
   onReady?: () => void
-  translationService?: TranslationService
+  translationService: TranslationService
 }
 
 export type ManualTranslator = (newLocale: string) => Promise<void>
