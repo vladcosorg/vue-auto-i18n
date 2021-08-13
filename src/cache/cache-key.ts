@@ -2,14 +2,17 @@ import { hashString } from '../util'
 
 export class CacheKey {
   protected cacheElements: unknown[]
-  protected generatedKey?: number
+  protected generatedKey?: string
+
   constructor(...elements: unknown[]) {
     this.cacheElements = elements
   }
 
-  getKey(): number {
+  getKey(): string {
     if (!this.generatedKey) {
-      this.generatedKey = hashString(JSON.stringify(this.cacheElements))
+      this.generatedKey = `${this.cacheElements[0]}-${hashString(
+        JSON.stringify(this.cacheElements),
+      )}`
     }
 
     return this.generatedKey

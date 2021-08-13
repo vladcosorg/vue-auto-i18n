@@ -35,9 +35,9 @@ export class ChainedCache implements CacheType {
     return false
   }
 
-  async set(key: CacheKey, value: unknown): Promise<void> {
+  set(key: CacheKey, value: unknown): void {
     for (const cache of this.cacheChain) {
-      await cache.set(key, value)
+      cache.set(key, value)
     }
   }
 }
