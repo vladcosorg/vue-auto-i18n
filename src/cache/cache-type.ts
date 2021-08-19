@@ -1,7 +1,5 @@
-import { CacheKey } from './cache-key'
-
 export interface CacheType {
-  has(key: CacheKey): Promise<boolean>
-  get<T>(key: CacheKey): Promise<T | undefined> | T | undefined
-  set(key: CacheKey, value: unknown): void
+  has(key: string): Promise<boolean>
+  get<T>(key: string): Promise<T | undefined> | T | undefined
+  set(key: string, value: unknown): void
 }

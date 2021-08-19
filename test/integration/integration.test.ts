@@ -100,7 +100,7 @@ function setupMockAndExpect(
 }
 
 // eslint-disable-next-line jest/expect-expect
-test('That data passes through', () => {
+test.skip('That data passes through', () => {
   return setupMockAndExpect(
     {
       vueI18nOptions: {
@@ -119,7 +119,7 @@ test('That data passes through', () => {
   )
 })
 
-test('That that blacklistedPaths ignores the received translations', () => {
+test.skip('That that blacklistedPaths ignores the received translations', () => {
   return setupMockAndExpect(
     {
       vueI18nOptions: {
@@ -149,7 +149,7 @@ test('That that blacklistedPaths ignores the received translations', () => {
   )
 })
 
-test('Ensure that the message functions are not sent for translation', () => {
+test.skip('Ensure that the message functions are not sent for translation', () => {
   return setupMockAndExpect(
     {
       vueI18nOptions: {

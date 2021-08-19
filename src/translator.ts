@@ -1,9 +1,16 @@
 import merge from 'lodash/merge'
+import set from 'lodash/set'
+import unset from 'lodash/unset'
+import { getDiff } from 'recursive-diff'
 import { Locale, LocaleMessageObject } from 'vue-i18n'
-import { CacheKey } from './cache/cache-key'
 import { CacheType } from './cache/cache-type'
 import { ChainedCache } from './cache/type/chained-cache'
 import { InMemoryCache } from './cache/type/in-memory-cache'
+import {
+  createFingerprintedEnvelope,
+  FingerprintedPayload,
+  wrapIntoFingerprintedEnvelope,
+} from './fingerprinted-payload'
 import { TranslationService } from './translation-service/translation-service'
 import { excludeKeys } from './util'
 
@@ -12,7 +19,7 @@ const defaultCache = new InMemoryCache()
 export interface TranslatorOptions {
   blacklistedPaths?: string[]
   translationService: TranslationService
-  sourceLanguage?: Locale
+  sourceLanguage: Locale
   cache?: CacheType | CacheType[]
 }
 
@@ -31,28 +38,82 @@ export async function translateMessageObject(
   newLocale: string,
   options: TranslatorOptions,
 ): Promise<LocaleMessageObject> {
+  if (newLocale === options.sourceLanguage) {
+    return sourceMessages
+  }
+
+  const cache = getCache(options)
+
+  const fingerprintedCurrentMessages = wrapIntoFingerprintedEnvelope(
+    sourceMessages,
+  )
+  const masterFingerprint = fingerprintedCurrentMessages.fingerprint
+
   let messagesForTranslation = sourceMessages
   messagesForTranslation = excludeKeys(
     messagesForTranslation,
     options.blacklistedPaths ?? [],
   )
 
-  const cache = getCache(options)
-  const cacheKey = new CacheKey(newLocale, messagesForTranslation)
+  const cacheKey = newLocale
 
-  let outputMessages: LocaleMessageObject
   if (await cache.has(cacheKey)) {
-    outputMessages = (await cache.get<LocaleMessageObject>(
+    const payloadEnvelope = (await cache.get(
       cacheKey,
-    )) as LocaleMessageObject
+    )) as FingerprintedPayload<{
+      source: LocaleMessageObject
+      translated: LocaleMessageObject
+    }>
+
+    if (payloadEnvelope.fingerprint === masterFingerprint) {
+      return merge({}, sourceMessages, payloadEnvelope.payload.translated)
+    }
+
+    const diff = getDiff(payloadEnvelope.payload.source, sourceMessages)
+    const updatedTranslations = payloadEnvelope.payload.translated
+    const newMessages = {}
+    for (const diffItem of diff) {
+      if (diffItem.op === 'delete') {
+        unset(updatedTranslations, diffItem.path)
+      } else {
+        set(newMessages, diffItem.path, diffItem.val)
+      }
+    }
+    const partialMessages = await options.translationService.translate(
+      newLocale,
+      newMessages,
+    )
+
+    const merged = merge(
+      {},
+      sourceMessages,
+      updatedTranslations,
+      partialMessages,
+    )
+
+    cache.set(
+      cacheKey,
+      createFingerprintedEnvelope(masterFingerprint, {
+        source: sourceMessages,
+        translated: merged,
+      }),
+    )
+
+    return merged
   } else {
-    outputMessages = await options.translationService.translate(
+    const outputMessages = await options.translationService.translate(
       newLocale,
       messagesForTranslation,
     )
 
-    cache.set(cacheKey, outputMessages)
-  }
+    cache.set(
+      cacheKey,
+      createFingerprintedEnvelope(masterFingerprint, {
+        source: messagesForTranslation,
+        translated: outputMessages,
+      }),
+    )
 
-  return merge({}, sourceMessages, outputMessages)
+    return merge({}, sourceMessages, outputMessages)
+  }
 }

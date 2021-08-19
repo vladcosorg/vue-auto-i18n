@@ -1,18 +1,17 @@
-import { CacheKey } from '../cache-key'
 import { CacheType } from '../cache-type'
 
 export class InMemoryCache implements CacheType {
   protected cache = new Map()
 
-  public async has(key: CacheKey): Promise<boolean> {
-    return this.cache.has(key.getKey())
+  public async has(key: string): Promise<boolean> {
+    return this.cache.has(key)
   }
 
-  public get<T>(key: CacheKey): T | undefined {
-    return this.cache.get(key.getKey())
+  public get<T>(key: string): T | undefined {
+    return this.cache.get(key)
   }
 
-  public set(key: CacheKey, value: unknown): void {
-    this.cache.set(key.getKey(), value)
+  public set(key: string, value: unknown): void {
+    this.cache.set(key, value)
   }
 }

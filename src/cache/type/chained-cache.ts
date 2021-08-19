@@ -1,4 +1,3 @@
-import { CacheKey } from '../cache-key'
 import { CacheType } from '../cache-type'
 
 export class ChainedCache implements CacheType {
@@ -6,7 +5,7 @@ export class ChainedCache implements CacheType {
   constructor(...caches: CacheType[]) {
     this.cacheChain = caches
   }
-  async get<T>(key: CacheKey): Promise<T | undefined> {
+  async get<T>(key: string): Promise<T | undefined> {
     const failedCaches: CacheType[] = []
     for (const cache of this.cacheChain) {
       const result = cache.get<T>(key)
@@ -23,7 +22,7 @@ export class ChainedCache implements CacheType {
 
     return
   }
-  async has(key: CacheKey): Promise<boolean> {
+  async has(key: string): Promise<boolean> {
     for (const cache of this.cacheChain) {
       const result = await cache.has(key)
 
@@ -35,7 +34,7 @@ export class ChainedCache implements CacheType {
     return false
   }
 
-  set(key: CacheKey, value: unknown): void {
+  set(key: string, value: unknown): void {
     for (const cache of this.cacheChain) {
       cache.set(key, value)
     }
