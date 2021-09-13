@@ -7,7 +7,7 @@ dist
 /dist
 /.eslintcache
 /node_modules
-.yarn
+.yarn/cache
 .idea
 .yarnrca
 /yarn-error.log
