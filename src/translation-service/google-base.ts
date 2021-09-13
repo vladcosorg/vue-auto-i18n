@@ -1,7 +1,8 @@
 import { unflatten } from 'flat'
-import { LocaleMessageObject } from 'vue-i18n'
+import { Messages } from '../types'
 
 export type TranslationMap = Map<string, string>
+
 export abstract class GoogleBase {
   protected linkedMessageIndex: string[] = []
   protected placeholderIndex: string[] = []
@@ -53,10 +54,7 @@ export abstract class GoogleBase {
     return unescapedMessage
   }
 
-  protected decode(
-    input: string,
-    translationMap: TranslationMap,
-  ): LocaleMessageObject {
+  protected decode(input: string, translationMap: TranslationMap): Messages {
     const output: Record<string, string> = {}
 
     this.linkedMessageIndex.forEach((replacement, index) => {

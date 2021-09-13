@@ -1,10 +1,11 @@
 import translate from '@vitalets/google-translate-api'
+import { Messages } from '../types'
 import { splitStringIntoChunks } from '../util'
 import { GoogleBase, TranslationMap } from './google-base'
 import { TranslationService } from './translation-service'
 
 import flatten from 'flat'
-import { Locale, LocaleMessageObject } from 'vue-i18n'
+import { Locale } from 'vue-i18n'
 
 export class GoogleFree extends GoogleBase implements TranslationService {
   protected linkedMessageIndex: string[] = []
@@ -18,8 +19,8 @@ export class GoogleFree extends GoogleBase implements TranslationService {
 
   async translate(
     targetLanguage: Locale,
-    messages: LocaleMessageObject,
-  ): Promise<LocaleMessageObject> {
+    messages: Messages,
+  ): Promise<Messages> {
     const translationMap: TranslationMap = new Map(
       Object.entries(flatten(messages)),
     )

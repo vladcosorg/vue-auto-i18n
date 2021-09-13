@@ -1,6 +1,6 @@
 import isPlainObject from 'lodash/isPlainObject'
 import reduce from 'lodash/reduce'
-import { LocaleMessageObject } from 'vue-i18n'
+import { Messages } from './types'
 
 export function hashString(str: string, seed = 0): number {
   let h1 = 0xde_ad_be_ef ^ seed,
@@ -20,17 +20,17 @@ export function hashString(str: string, seed = 0): number {
 }
 
 export function excludeKeys(
-  input: LocaleMessageObject,
+  input: Messages,
   blacklistedPaths: string[],
   path?: string,
-): LocaleMessageObject {
+): Messages {
   return reduce(
     input,
     (result, value, key) => {
       const currentPath = path ? `${path}.${key}` : key
       if (isPlainObject(value)) {
         result[key] = excludeKeys(
-          value as LocaleMessageObject,
+          value as Messages,
           blacklistedPaths,
           path ? `${path}.${key}` : key,
         )
@@ -42,7 +42,7 @@ export function excludeKeys(
 
       return result
     },
-    {} as LocaleMessageObject,
+    {} as Messages,
   )
 }
 

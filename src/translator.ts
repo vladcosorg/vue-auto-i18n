@@ -12,6 +12,7 @@ import {
   wrapIntoFingerprintedEnvelope,
 } from './fingerprinted-payload'
 import { TranslationService } from './translation-service/translation-service'
+import { Messages } from './types'
 import { excludeKeys } from './util'
 
 const defaultCache = new InMemoryCache()
@@ -34,10 +35,10 @@ function getCache(options: TranslatorOptions): CacheType {
 }
 
 export async function translateMessageObject(
-  sourceMessages: LocaleMessageObject,
+  sourceMessages: Messages,
   newLocale: string,
   options: TranslatorOptions,
-): Promise<LocaleMessageObject> {
+): Promise<Messages> {
   if (newLocale === options.sourceLanguage) {
     return sourceMessages
   }

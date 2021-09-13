@@ -1,10 +1,11 @@
 import flatten from 'flat'
-import { Locale, LocaleMessageObject } from 'vue-i18n'
-import { GoogleBase, TranslationMap } from './google-base'
 
 import fetch from 'node-fetch'
+import { Locale } from 'vue-i18n'
 
 import { InformativeError } from '../error'
+import { Messages } from '../types'
+import { GoogleBase, TranslationMap } from './google-base'
 import { TranslationService } from './translation-service'
 
 type TranslationAPIResponse = {
@@ -18,8 +19,8 @@ export class GoogleCloud extends GoogleBase implements TranslationService {
 
   async translate(
     targetLanguage: Locale,
-    messages: LocaleMessageObject,
-  ): Promise<LocaleMessageObject> {
+    messages: Messages,
+  ): Promise<Messages> {
     const translationMap: TranslationMap = new Map(
       Object.entries(flatten(messages)),
     )
