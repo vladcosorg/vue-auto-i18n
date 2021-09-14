@@ -10,7 +10,7 @@ import {
 import { integrateWithVueI18n } from '../../src'
 import { Options } from '../../src/integration/vue-i18n'
 import { GoogleFree } from '../../src/translation-service/google-free'
-import { VueI18nReturn } from '../../src/types'
+import { Messages, VueI18nReturn } from '../../src/types'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function mapValuesDeep(obj: any, fn: any, key?: any): any {
@@ -59,16 +59,14 @@ function setupWithMessages(
   return i18n
 }
 
-function mockWithResponseMessages(
-  responseMessages?: LocaleMessageObject,
-): void {
+function mockWithResponseMessages(responseMessages?: Messages): void {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const instance = mockedTranslationAPI.mock.instances.pop()!
   instance['translate'] = (
     _targetLanguage: Locale,
-    messages: LocaleMessageObject,
-  ): Promise<LocaleMessageObject> => {
-    return new Promise<LocaleMessageObject>((resolve) => {
+    messages: Messages,
+  ): Promise<Messages> => {
+    return new Promise<Messages>((resolve) => {
       resolve(
         mapValuesDeep(
           responseMessages ?? messages,
