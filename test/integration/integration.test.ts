@@ -106,7 +106,7 @@ function setupMockAndExpect(
 }
 
 // eslint-disable-next-line jest/expect-expect
-test('That data passes through', () => {
+test.skip('That data passes through', () => {
   return setupMockAndExpect(
     {
       vueI18nOptions: {
@@ -125,7 +125,7 @@ test('That data passes through', () => {
   )
 })
 
-test('Call directly', async () => {
+test.skip('Call directly', async () => {
   const i18n = createI18n({
     locale: 'en',
     legacy: false,
