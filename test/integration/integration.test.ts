@@ -1,8 +1,9 @@
 import { mount } from '@vue/test-utils'
 import { isArray, isObject, isPlainObject, map, mapValues } from 'lodash'
 import { mocked } from 'ts-jest/utils'
+import { WritableComputedRef } from 'vue'
 import { createI18n, Locale, VueI18nOptions } from 'vue-i18n'
-import { integrateWithVueI18n } from '../../src'
+import { integrateWithVueI18n, TranslationService } from '../../src'
 import { Options } from '../../src/integration/vue-i18n'
 import { GoogleFree } from '../../src/translation-service/google-free'
 import { Messages, VueI18nReturn } from '../../src/types'
@@ -36,7 +37,9 @@ function setupWithMessages(
   })
 
   mount(
-    {},
+    {
+      render: () => 'hi',
+    },
     {
       global: {
         plugins: [i18n],
@@ -77,12 +80,11 @@ function triggerAndExpect(
   i18n: VueI18nReturn,
   done: (value: void) => void,
 ): void {
-  i18n.locale = 'ru'
-
-  // i18n.global.vm.$watch('messages', () => {
-  expectationCallback({ i18n })
-  done()
-  // })
+  ;(i18n.locale as WritableComputedRef<string>).value = 'ru'
+  setTimeout(() => {
+    expectationCallback({ i18n })
+    done()
+  })
 }
 
 function setupMockAndExpect(
@@ -104,7 +106,7 @@ function setupMockAndExpect(
 }
 
 // eslint-disable-next-line jest/expect-expect
-test.skip('That data passes through', () => {
+test('That data passes through', () => {
   return setupMockAndExpect(
     {
       vueI18nOptions: {
@@ -116,11 +118,34 @@ test.skip('That data passes through', () => {
       },
     },
     ({ i18n }) => {
-      expect(i18n.messages).toEqual({
+      expect(i18n.getLocaleMessage('ru')).toEqual({
         test: 'foo translated',
       })
     },
   )
+})
+
+test('Call directly', async () => {
+  const i18n = createI18n({
+    locale: 'en',
+    legacy: false,
+    messages: {
+      en: {
+        foo: 'bar',
+      },
+    },
+  })
+
+  const translator = integrateWithVueI18n({
+    i18nPluginInstance: i18n.global,
+    sourceLanguage: 'en',
+    translationService: new PassthroughService(),
+  })
+
+  await translator('ru')
+  expect(i18n.global.getLocaleMessage('ru')).toEqual({
+    foo: 'bar translated',
+  })
 })
 
 test.skip('That that blacklistedPaths ignores the received translations', () => {
@@ -169,3 +194,12 @@ test.skip('Ensure that the message functions are not sent for translation', () =
     },
   )
 })
+
+class PassthroughService implements TranslationService {
+  async translate(
+    _targetLanguage: Locale,
+    messages: Messages,
+  ): Promise<Messages> {
+    return mapValuesDeep(messages, (value: string) => `${value} translated`)
+  }
+}

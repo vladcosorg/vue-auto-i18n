@@ -1,5 +1,6 @@
 import isEmpty from 'lodash/isEmpty'
 import merge from 'lodash/merge'
+import { ComputedRef, watch } from 'vue'
 import { Locale } from 'vue-i18n'
 import { TranslationService } from '../translation-service/translation-service'
 import { translateMessageObject, TranslatorOptions } from '../translator'
@@ -60,7 +61,12 @@ export function integrateWithVueI18n(options: Options): ManualTranslator {
   }
 
   if (options.automatic === undefined || options.automatic) {
-    // instance.vm.$watch('locale', translate)
+    watch(
+      options.i18nPluginInstance.locale as ComputedRef,
+      async (newLocale) => {
+        await translate(newLocale)
+      },
+    )
   }
 
   return translate
