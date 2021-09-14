@@ -1,12 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { isArray, isObject, isPlainObject, map, mapValues } from 'lodash'
 import { mocked } from 'ts-jest/utils'
-import {
-  createI18n,
-  Locale,
-  LocaleMessageObject,
-  VueI18nOptions,
-} from 'vue-i18n'
+import { createI18n, Locale, VueI18nOptions } from 'vue-i18n'
 import { integrateWithVueI18n } from '../../src'
 import { Options } from '../../src/integration/vue-i18n'
 import { GoogleFree } from '../../src/translation-service/google-free'
@@ -94,7 +89,7 @@ function setupMockAndExpect(
   options: {
     vueI18nOptions?: VueI18nOptions
     pluginOptions?: Partial<Options>
-    responseMessages?: LocaleMessageObject
+    responseMessages?: Messages
   },
   expectation: (args: { i18n: VueI18nReturn }) => void,
 ): Promise<void> {
