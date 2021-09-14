@@ -2,7 +2,7 @@ import { GoogleCloud } from '../../src/translation-service/google-cloud'
 import { GoogleFree } from '../../src/translation-service/google-free'
 
 // eslint-disable-next-line jest/no-disabled-tests
-test('Live cloud', async () => {
+test.skip('Live cloud', async () => {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const api = new GoogleCloud(process.env.GOOGLE_API_KEY!)
   const result = await api.translate('ro', {
