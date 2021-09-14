@@ -36,12 +36,12 @@ export function integrateWithVueI18n(options: Options): ManualTranslator {
     }
 
     const instance = options.i18nPluginInstance
-    const existingTranslationsForTheLocale = instance.global.getLocaleMessage(
+    const existingTranslationsForTheLocale = instance.getLocaleMessage(
       newLocale,
     )
 
     let translatedMessages = await translateMessageObject(
-      instance.global.getLocaleMessage(options.sourceLanguage),
+      instance.getLocaleMessage(options.sourceLanguage),
       newLocale,
       options,
     )
@@ -53,7 +53,7 @@ export function integrateWithVueI18n(options: Options): ManualTranslator {
       )
     }
 
-    instance.global.setLocaleMessage(newLocale, translatedMessages)
+    instance.setLocaleMessage(newLocale, translatedMessages)
     translatedLocales.add(newLocale)
 
     runOnReadyCallback()

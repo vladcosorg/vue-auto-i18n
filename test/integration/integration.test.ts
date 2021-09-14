@@ -45,13 +45,13 @@ function setupWithMessages(
   )
 
   integrateWithVueI18n({
-    i18nPluginInstance: i18n,
+    i18nPluginInstance: i18n.global,
     sourceLanguage: 'en',
     translationService: new GoogleFree(),
     ...pluginOptions,
   })
 
-  return i18n
+  return i18n.global
 }
 
 function mockWithResponseMessages(responseMessages?: Messages): void {
@@ -77,7 +77,7 @@ function triggerAndExpect(
   i18n: VueI18nReturn,
   done: (value: void) => void,
 ): void {
-  i18n.global.locale = 'ru'
+  i18n.locale = 'ru'
 
   // i18n.global.vm.$watch('messages', () => {
   expectationCallback({ i18n })
@@ -116,7 +116,7 @@ test.skip('That data passes through', () => {
       },
     },
     ({ i18n }) => {
-      expect(i18n.global.messages).toEqual({
+      expect(i18n.messages).toEqual({
         test: 'foo translated',
       })
     },
@@ -142,7 +142,7 @@ test.skip('That that blacklistedPaths ignores the received translations', () => 
       },
     },
     ({ i18n }) => {
-      expect(i18n.global.messages).toEqual({
+      expect(i18n.messages).toEqual({
         test: 'this should be ignored',
         foo: {
           test: 'foo translated',
@@ -165,7 +165,7 @@ test.skip('Ensure that the message functions are not sent for translation', () =
       },
     },
     ({ i18n }) => {
-      expect(i18n.global.messages).toHaveProperty('ru')
+      expect(i18n.messages).toHaveProperty('ru')
     },
   )
 })
